@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html ng-app="PacientesApp">
+<head>
+    <title>Portal do Médico</title>
+
+    <link rel="stylesheet" href="css/lib/angular-material.min.css"/>
+    <link rel="stylesheet" href="css/lib/bootstrap.css"/>
+    <link rel="stylesheet" href="css/paciente.css"/>
+    
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-animate.min.js"></script>
+    <script src="js/lib/angular-aria.min.js"></script>
+    <script src="js/lib/angular-messages.min.js"></script>
+    <script src="js/lib/angular-material.min.js"></script>
+    <script src="js/lib/moment.min.js"></script>
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/soapclient.js"></script>
+    <script src="js/lib/angular.soap.js"></script>    
+    <script src="js/lib/mask.js"></script>    
+
+    <script src="js/paciente.js"></script>    
+</head>
+<body>
+    <div ng-controller="PacientesCtrl">
+
+        <md-card>
+            <md-card-title>
+                <md-card-title-text><span class="md-headline">Cadastro de Paciente</span>
+                    <input type="button" title="Salvar" ng-click='gravar()'/>
+                <!--span.md-subhead ...... .... ....-->
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <md-content>
+                    <br>
+                    <br>
+                    <div layout-gt-sm="row">
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>CPF</label>
+                            <input ng-model="cpf" ui-mask="999.999.999-99" ng-change='BuscarCPF()'/>
+                        </md-input-container>
+
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Nome</label>
+                            <input ng-model="nome"/>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Data Nasc.</label>
+                            <md-datepicker md-hide-icons="calendar" ng-model="nascimento">
+                            </md-datepicker>
+                        </md-input-container>                        
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <md-radio-group layout="row" ng-model="sexo">
+                            <md-radio-button value="M" class="md-primary">Masculino</md-radio-button>
+                            <md-radio-button value="F" class="md-primary">Feminino </md-radio-button>
+                            </md-radio-group>
+                        </md-input-container>
+
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>RG</label>
+                            <input ng-model="rg"/>
+                        </md-input-container>                        
+
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Estado Civil</label>
+                            <md-select ng-model="estadocivil">
+                                <md-option ng-repeat="e in est_civ" ng-value="e.Codigo">
+                                    {{e.Nome}}
+                                </md-option>
+                            </md-select>                     
+                        </md-input-container>
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Profissão</label>
+                            <md-select ng-model="profissao">
+                                <md-option ng-repeat="p in profi" ng-value="p.Codigo">
+                                    {{p.Nome}}
+                                </md-option>
+                            </md-select>                     
+                        </md-input-container>                            
+                    </div>                    
+                    <div layout-gt-sm="row">
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Nome do Pai</label>
+                            <input ng-model="pai"/>
+                        </md-input-container>       
+
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Nome da Mae</label>
+                            <input ng-model="mae"/>
+                        </md-input-container>       
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Convênio:</label>
+                            <md-select ng-model="convenio">
+                                <md-option ng-repeat="c in conve" ng-value="c.Codigo">
+                                    {{c.Nome}}
+                                </md-option>
+                            </md-select>                     
+                        </md-input-container>
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Plano</label>
+                            <input ng-model="plano"/>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">                            
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Nº Carteirinha</label>
+                            <input ng-model="carteirinha"/>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Validade Carteirinha</label>
+                            <md-datepicker md-hide-icons="calendar" ng-model="validade_cart">
+                            </md-datepicker>
+                        </md-input-container>   
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Titular</label>
+                            <input ng-model="titular"/>
+                        </md-input-container>                            
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>CEP</label>
+                            <input ng-model="cep" ui-cep="ui-cep"/>
+                        </md-input-container>  
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Cidade</label>
+                            <input ng-model="cidade"/>
+                        </md-input-container>   
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>UF</label>
+                            <input ng-model="uf"/>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Bairro</label>
+                            <md-select ng-model="bairro">
+                                <md-option ng-repeat="b in bairr" ng-value="b.Codigo">
+                                    {{b.Nome}}
+                                </md-option>
+                            </md-select>                     
+                        </md-input-container>                            
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Contato</label>
+                            <input ng-model="contato"/>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Celular</label>
+                            <input ng-model="celular" ui-telefone="ui-telefone"/>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>Telefone</label>
+                            <input ng-model="telefone" ui-telefone="ui-telefone"/>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm="" class="md-block">
+                            <label>E-mail</label>
+                            <input ng-model="email" type='email'/>
+                        </md-input-container>
+                    </div>                        
+                </md-content>                
+            </md-card-content>
+        </md-card>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,7 @@
+/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/bin/hsm_portal_medico.dll
+/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/bin/hsm_portal_medico.pdb
+/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/bin/Newtonsoft.Json.dll
+/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/bin/Newtonsoft.Json.xml
+/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.csproj.CoreCompileInputs.cache
+/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.dll
+/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.pdb

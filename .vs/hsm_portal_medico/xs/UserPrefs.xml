@@ -1,0 +1,20 @@
+﻿<Properties StartupConfiguration="{5D8877DD-0485-4DDE-82BD-87D50737A4D3}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Status do hsm_portal_medico">
+    <Files>
+      <File FileName="hsm_portal_medico/paciente.asmx.cs" Line="43" Column="1" />
+      <File FileName="hsm_portal_medico/js/paciente.js" Line="109" Column="43" />
+      <File FileName="hsm_portal_medico/paciente.html" Line="33" Column="29" />
+      <File FileName="Status do hsm_portal_medico" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/Default.aspx.cs" relfile="hsm_portal_medico/Default.aspx.cs" line="16" column="1" />
+      <Breakpoint file="/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/paciente.asmx.cs" relfile="hsm_portal_medico/paciente.asmx.cs" line="43" column="16" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.hsm__portal__medico PreferredExecutionTarget="chromium-browser" />
+  <MultiItemStartupConfigurations />
+</Properties>
