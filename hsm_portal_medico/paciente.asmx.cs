@@ -43,7 +43,7 @@ namespace hsm_portal_medico
             Conexao cn = new Conexao();
             SqlParameter sqlPar = new SqlParameter();
             ArrayList colPar = new ArrayList();
-            string strSQL ="";
+            string strSQL;
 
 			sqlPar.DbType = DbType.String;
             sqlPar.Value = obj.bairro;
