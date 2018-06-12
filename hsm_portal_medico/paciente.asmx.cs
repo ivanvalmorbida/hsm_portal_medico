@@ -40,37 +40,118 @@ namespace hsm_portal_medico
 		[WebMethod]
 		public string setPacienteCPF(objPaciente obj)
 		{
-			return "Ok";
-            /*Conexao cn = new Conexao();
+            Conexao cn = new Conexao();
             SqlParameter sqlPar = new SqlParameter();
             ArrayList colPar = new ArrayList();
-            StringBuilder strSQL = new StringBuilder();
+            string strSQL ="";
 
-            sqlPar.DbType = DbType.String;
-			sqlPar.Value = objPac.cpf;
-            sqlPar.ParameterName = "@CPF";
+			sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.bairro;
+			sqlPar.ParameterName = "@bairro";
             colPar.Add(sqlPar);
 
-			objPes.CODIGO;
-            = $scope.cpf
-            objPes.NOME = $scope.nome
-            objPes.DATA_NASCIM = $scope.nascimento
-            objPes.SEXO = $scope.sexo
-            objPes.RG = $scope.rg
-            objPes.EST_CIVIL = $scope.estadocivil
-            objPes.PROFISSAO = $scope.profissao
-            objPes.NOMEPAI = $scope.pai
-            objPes.NOMEMAE = $scope.mae
-            objPes.CONVENIO = $scope.convenio
-            objPes.CONVENIO_PLANO = $scope.plano
-            objPes.NRCONVENIO = $scope.carteirinha
-            objPes.TITULAR = $scope.titular
-            objPes.CONVENIO_VALIDADE_CARTEIRA = $scope.validade_cart
-            objPes.CEP = $scope.cep
-            objPes.BAIRRO = $scope.bairro
-            objPes.Celular = $scope.celular
-            objPes.FONERESID = $scope.telefone
-            objPes.EMAIL = $scope.email*/
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.carteirinha;
+			sqlPar.ParameterName = "@carteirinha";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.celular;
+			sqlPar.ParameterName = "@celular";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.cep;
+			sqlPar.ParameterName = "@cep";
+            colPar.Add(sqlPar);
+
+			sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = obj.codigo;
+			sqlPar.ParameterName = "@codigo";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = obj.convenio;
+			sqlPar.ParameterName = "@convenio";
+            colPar.Add(sqlPar);
+            
+			sqlPar.DbType = DbType.String;
+			sqlPar.Value = obj.cpf;
+			sqlPar.ParameterName = "@cpf";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.email;
+			sqlPar.ParameterName = "@email";
+			colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = obj.estadocivil;
+			sqlPar.ParameterName = "@estadocivil";
+            colPar.Add(sqlPar);
+
+			sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.mae;
+			sqlPar.ParameterName = "@mae";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.Date;
+            sqlPar.Value = obj.nascimento;
+			sqlPar.ParameterName = "@nascimento";
+            colPar.Add(sqlPar);
+
+			sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.nome;
+			sqlPar.ParameterName = "@nome";
+            colPar.Add(sqlPar);
+           
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.pai;
+			sqlPar.ParameterName = "@pai";
+            colPar.Add(sqlPar);
+
+			sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.plano;
+			sqlPar.ParameterName = "@plano";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = obj.profissao;
+			sqlPar.ParameterName = "@profissao";
+            colPar.Add(sqlPar);
+
+			sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.rg;
+			sqlPar.ParameterName = "@rg";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.sexo;
+			sqlPar.ParameterName = "@sexo";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.telefone;
+			sqlPar.ParameterName = "@telefone";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.titular;
+			sqlPar.ParameterName = "@titular";
+            colPar.Add(sqlPar);
+
+            sqlPar.DbType = DbType.Date;
+            sqlPar.Value = obj.validade_cart;
+			sqlPar.ParameterName = "@validade_cart";
+            colPar.Add(sqlPar);
+            
+
+			strSQL = "Insert into PACIENTE (CNPJCPF, nome, DATA_NASCIM, sexo, rg, EST_CIVIL, profissao, NOMEPAI," +
+				"NOMEMAE, convenio, CONVENIO_PLANO, NRCONVENIO, TITULAR, CONVENIO_VALIDADE_CARTEIRA, CEP, BAIRRO, " +
+				"Celular, FONERESID, EMAIL";
+			
+
+			return "Ok";
 		}
 
 		[WebMethod]
@@ -79,7 +160,7 @@ namespace hsm_portal_medico
 			Conexao cn = new Conexao();
             SqlParameter sqlPar = new SqlParameter();
             ArrayList colPar = new ArrayList();
-            StringBuilder strSQL = new StringBuilder();
+            string strSQL="";
             DataTable tb;
 
 			sqlPar.DbType = DbType.String;
@@ -87,8 +168,14 @@ namespace hsm_portal_medico
             sqlPar.ParameterName = "@CPF";
             colPar.Add(sqlPar);
 
-			strSQL.Append("SELECT * FROM PACIENTE where CNPJCPF=@CPF").AppendLine();
-
+			strSQL="SELECT codigo, CNPJCPF cpf, Isnull(nome,'') nome, DATA_NASCIM nascimento, " +
+			    "Isnull(sexo,'') sexo, rg, Isnull(EST_CIVIL,0) estadocivil, Isnull(profissao,0) profissao, " +
+			    "Isnull(NOMEPAI,'') pai, Isnull(NOMEMAE,'') mae, Isnull(convenio,0) convenio, " +
+				"Isnull(CONVENIO_PLANO,'') plano, Isnull(NRCONVENIO,'') carteirinha, Isnull(TITULAR,'') titular, " +
+				"CONVENIO_VALIDADE_CARTEIRA validade_cart, Isnull(CEP,'') cep, Isnull(BAIRRO,'') bairro, " +
+				"Isnull(Celular,'') celular, Isnull(FONERESID,'') telefone, Isnull(EMAIL,'') email " +
+				"From PACIENTE where CNPJCPF=@CPF";
+            
             tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Paciente", colPar).Tables[0];
 
 			return JsonConvert.SerializeObject(tb, Newtonsoft.Json.Formatting.None);

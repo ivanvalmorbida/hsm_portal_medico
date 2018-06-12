@@ -49,7 +49,7 @@ app.directive('uiTelefone', function(){
 })
 
 app.factory("PacienteService", ['$soap',function($soap){
-	var base_url = "http://127.0.0.1:8080/paciente.asmx"
+    var base_url = "http://127.0.0.1:8080/paciente.asmx"
     
     var setPacienteCPF = function(obj){
             return $soap.post(base_url,"setPacienteCPF", {obj: obj})
@@ -79,7 +79,7 @@ app.factory("PacienteService", ['$soap',function($soap){
             return $soap.post(base_url,"getCEP", {strCep: cep})
         }
 
-	return {
+    return {
         setPacienteCPF:setPacienteCPF,
         getPacienteCPF:getPacienteCPF,
         getEstadoCivil: getEstadoCivil,
@@ -97,32 +97,22 @@ app.controller("PacientesCtrl", function ($scope, $http, PacienteService) {
         objPaciente["codigo"] = $scope.codigo
         objPaciente["cpf"] = $scope.cpf
         objPaciente["nome"] = $scope.nome
-        objPaciente["nascimento"] = new Date()
+        objPaciente["nascimento"] = $scope.nascimento
         objPaciente["sexo"] = $scope.sexo
         objPaciente["rg"] = $scope.rg
         objPaciente["estadocivil"] = $scope.estadocivil
         objPaciente["profissao"] = $scope.profissao
         objPaciente["pai"] = $scope.pai
         objPaciente["mae"] = $scope.mae
-        objPaciente["convenio"] = 1
-        objPaciente["plano"] = '' //$scope.plano
-        objPaciente["carteirinha"] = '' //$scope.carteirinha
-        objPaciente["titular"] = $scope.titular
-        objPaciente["validade_cart"] = new Date()
-        objPaciente["bairro"] = ""
-        objPaciente["celular"] = ""
-        objPaciente["telefone"] = ""
-        objPaciente["email"] = ""
-
-        /*
-        objPaciente["nascimento"] = $scope.nascimento
         objPaciente["convenio"] = $scope.convenio
-        objPaciente["titular"] = 
+        objPaciente["plano"] = $scope.plano
+        objPaciente["carteirinha"] = $scope.carteirinha
+        objPaciente["titular"] = $scope.titular
         objPaciente["validade_cart"] = $scope.validade_cart
         objPaciente["bairro"] = $scope.bairro
         objPaciente["celular"] = $scope.celular
         objPaciente["telefone"] = $scope.telefone
-        objPaciente["email"] = $scope.email*/
+        objPaciente["email"] = $scope.email
 
         PacienteService.setPacienteCPF(objPaciente).then(function(response){
             //$scope.est_civ = JSON.parse(response)
@@ -157,18 +147,18 @@ app.controller("PacientesCtrl", function ($scope, $http, PacienteService) {
         if ($scope.cpf!=undefined) {cpf = $scope.cpf.replace('.','').replace('-','')} else {cpf=''}
         $scope.codigo = 0
         $scope.nome = ''
-        $scope.nascimento = null
-        $scope.sexo = null
+        $scope.nascimento = new Date()
+        $scope.sexo = ''
         $scope.rg = ''
-        $scope.estadocivil = null
-        $scope.profissao = null
+        $scope.estadocivil = 0
+        $scope.profissao = 0
         $scope.pai = ''
         $scope.mae = ''
-        $scope.convenio = null
+        $scope.convenio = 0
         $scope.plano = ''
         $scope.carteirinha = ''
         $scope.titular = ''
-        $scope.validade_cart = null
+        $scope.validade_cart = new Date()
         $scope.cep = ''
         $scope.bairro = ''
         $scope.celular = ''
@@ -182,25 +172,25 @@ app.controller("PacientesCtrl", function ($scope, $http, PacienteService) {
                 if(paci.length!=0){
                     var paci = paci[0]
 
-                    $scope.codigo = paci.CODIGO
-                    $scope.nome = paci.NOME
-                    $scope.nascimento = new Date(paci.DATA_NASCIM)
-                    $scope.sexo = paci.SEXO
-                    $scope.rg = paci.RG
-                    $scope.estadocivil = paci.EST_CIVIL
-                    $scope.profissao = paci.PROFISSAO
-                    $scope.pai = paci.NOMEPAI
-                    $scope.mae = paci.NOMEMAE
-                    $scope.convenio = paci.CONVENIO
-                    $scope.plano = paci.CONVENIO_PLANO
-                    $scope.carteirinha = paci.NRCONVENIO
-                    $scope.titular = paci.TITULAR
-                    $scope.validade_cart = new Date(paci.CONVENIO_VALIDADE_CARTEIRA)
-                    $scope.cep = paci.CEP
-                    $scope.bairro = paci.BAIRRO
-                    $scope.celular = paci.Celular
-                    $scope.telefone = paci.FONERESID.substring(1,12).replace(' ','')
-                    $scope.email = paci.EMAIL
+                    $scope.codigo = paci.codigo
+                    $scope.nome = paci.nome
+                    $scope.nascimento = new Date(paci.nascimento)
+                    $scope.sexo = paci.sexo
+                    $scope.rg = paci.rg
+                    $scope.estadocivil = paci.estadocivil
+                    $scope.profissao = paci.profissao
+                    $scope.pai = paci.pai
+                    $scope.mae = paci.mae
+                    $scope.convenio = paci.convenio
+                    $scope.plano = paci.plano
+                    $scope.carteirinha = paci.carteirinha
+                    $scope.titular = paci.titular
+                    $scope.validade_cart = new Date(paci.validade_cart)
+                    $scope.cep = paci.cep
+                    $scope.bairro = paci.bairro
+                    $scope.celular = paci.celular
+                    $scope.telefone = paci.telefone.substring(1,12).replace(' ','')
+                    $scope.email = paci.email
 
                     $scope.BuscarCEP()
                 }
