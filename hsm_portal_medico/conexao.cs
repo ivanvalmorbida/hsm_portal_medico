@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
+using System.Collections.Generic;
 //
 public sealed class Conexao
 {
@@ -98,7 +99,7 @@ public sealed class Conexao
         }
     }
 
-	public void ExecuteWithParam(string strSQL, ArrayList SQLPar)
+	public void ExecuteWithParam(string strSQL, List<SqlParameter> SQLPar)
     {
         if (DBCon.State == ConnectionState.Closed)
             OpenConection();
@@ -107,9 +108,8 @@ public sealed class Conexao
 
         SQLCommandWithPar.Connection = DBCon;
         SQLCommandWithPar.CommandText = strSQL;
-		foreach (SqlParameter xPar in SQLPar)
-            SQLCommandWithPar.Parameters.AddWithValue(xPar.ParameterName, xPar.Value);
-		
+		foreach (SqlParameter Par in SQLPar)
+            SQLCommandWithPar.Parameters.AddWithValue(Par.ParameterName, Par.Value);
         try
         {
             _MSG = "";
@@ -158,20 +158,18 @@ public sealed class Conexao
         return myDataSet;
     }
 
-	public ArrayList PreencherPar(object objX)
+	public List<SqlParameter> PreencherPar(object objX)
     {
         SqlParameter sqlPar;
-		ArrayList colPar = new ArrayList();
+		List<SqlParameter> colPar = new List<SqlParameter>();
 
         foreach (System.Reflection.PropertyInfo p in objX.GetType().GetProperties())
         {
             if (p.CanRead)
             {
                 sqlPar = new SqlParameter();
-				sqlPar.DbType = DbType.String; // TipoDB(p.PropertyType.Name);
+				sqlPar.DbType = TipoDB(p.PropertyType.Name);
                 sqlPar.Value = p.GetValue(objX, null);
-                if (sqlPar.Value == null/* TODO Change to default(_) if this is not a reference type */ & p.PropertyType.Name != "Boolean")
-                    sqlPar.Value = DBNull.Value;
                 sqlPar.ParameterName = "@" + p.Name;
                 colPar.Add(sqlPar);
             }
@@ -180,40 +178,18 @@ public sealed class Conexao
         return colPar;
     }
 
-	public ArrayList RemoverPar(ArrayList colPar, string strPar)
+	public List<SqlParameter> RemoverPar(List<SqlParameter> colPar, string strPar)
     {
-        SqlParameter sqlPar;
-
-        for (int i = 1; i <= colPar.Count; i++)
+        foreach (var Par in colPar)
         {
-			sqlPar = (ArrayList)colPar[i];
-            if (sqlPar.ParameterName == "@" + strPar)
+            if (Par.ParameterName == "@" + strPar)
             {
-                colPar.Remove(i);
+                colPar.Remove(Par);
                 break;
             }
         }
 
         return colPar;
-    }
-
-	public object TipoProp(object o, string strTipo)
-    {
-        if (o.ToString() == "")
-        {
-            if (strTipo == "String")
-                return "";
-            else if (strTipo == "Boolean")
-				return false;
-            else if (strTipo == "DateTime")
-                return null;
-            else
-				return 0;
-        }
-        else if (strTipo == "Boolean")
-			return (o.ToString() != "0");
-        else
-			return o;
     }
 
     public DbType TipoDB(string strTipo)
@@ -226,19 +202,10 @@ public sealed class Conexao
 			return DbType.Int32;
         else if (strTipo == "Int64")
 			return DbType.Int64;
-        else
+		else if (strTipo == "DateTime")
+			return DbType.DateTime;        
+		else
 			return DbType.String;
-    }
-
-    public object PreencherObj(SqlDataReader sqlReader, object objX)
-    {
-        foreach (System.Reflection.PropertyInfo p in objX.GetType().GetProperties())
-        {
-            if (p.CanRead)
-                p.SetValue(objX, TipoProp(sqlReader(p.Name), p.PropertyType.Name), null/* TODO Change to default(_) if this is not a reference type */);
-        }
-
-		return objX;
     }
 }
 

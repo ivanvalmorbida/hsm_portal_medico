@@ -1,39 +1,14 @@
 ﻿using System;
-using System.Xml;
-using System.Text;
 using System.Web.Services;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace hsm_portal_medico
 {
-    public class objPaciente
-    {
-		public int codigo { get; set; }
-		public string cpf { get; set; }
-		public string nome { get; set; }
-		public DateTime nascimento { get; set; }
-		public string sexo { get; set; }
-		public string rg { get; set; }
-		public int estadocivil { get; set; }
-		public int profissao { get; set; }
-		public string pai { get; set; }
-		public string mae { get; set; }
-		public int convenio { get; set; }
-		public string plano { get; set; }
-		public string carteirinha { get; set; }
-		public string titular { get; set; }
-		public DateTime validade_cart { get; set; }
-		public string cep { get; set; }
-		public string bairro { get; set; }
-		public string celular { get; set; }
-		public string telefone { get; set; }
-		public string email { get; set; }
-    }
-
-	[WebService(Namespace = "http://www.example.org/")]
+    [WebService(Namespace = "http://www.example.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 	public class paciente : System.Web.Services.WebService
     {
@@ -42,118 +17,33 @@ namespace hsm_portal_medico
 		{
             Conexao cn = new Conexao();
             SqlParameter sqlPar = new SqlParameter();
-            ArrayList colPar = new ArrayList();
-            string strSQL;
+			string strSQL;
 
-			sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.bairro;
-			sqlPar.ParameterName = "@bairro";
-            colPar.Add(sqlPar);
+			List<SqlParameter> colPar = cn.PreencherPar(obj);
 
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.carteirinha;
-			sqlPar.ParameterName = "@carteirinha";
-            colPar.Add(sqlPar);
+			if (obj.codigo == 0)
+			{
+				colPar = cn.RemoverPar(colPar, "codigo");
 
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.celular;
-			sqlPar.ParameterName = "@celular";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.cep;
-			sqlPar.ParameterName = "@cep";
-            colPar.Add(sqlPar);
-
-			sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = obj.codigo;
-			sqlPar.ParameterName = "@codigo";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = obj.convenio;
-			sqlPar.ParameterName = "@convenio";
-            colPar.Add(sqlPar);
-            
-			sqlPar.DbType = DbType.String;
-			sqlPar.Value = obj.cpf;
-			sqlPar.ParameterName = "@cpf";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.email;
-			sqlPar.ParameterName = "@email";
-			colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = obj.estadocivil;
-			sqlPar.ParameterName = "@estadocivil";
-            colPar.Add(sqlPar);
-
-			sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.mae;
-			sqlPar.ParameterName = "@mae";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.Date;
-            sqlPar.Value = obj.nascimento;
-			sqlPar.ParameterName = "@nascimento";
-            colPar.Add(sqlPar);
-
-			sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.nome;
-			sqlPar.ParameterName = "@nome";
-            colPar.Add(sqlPar);
-           
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.pai;
-			sqlPar.ParameterName = "@pai";
-            colPar.Add(sqlPar);
-
-			sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.plano;
-			sqlPar.ParameterName = "@plano";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = obj.profissao;
-			sqlPar.ParameterName = "@profissao";
-            colPar.Add(sqlPar);
-
-			sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.rg;
-			sqlPar.ParameterName = "@rg";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.sexo;
-			sqlPar.ParameterName = "@sexo";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.telefone;
-			sqlPar.ParameterName = "@telefone";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.titular;
-			sqlPar.ParameterName = "@titular";
-            colPar.Add(sqlPar);
-
-            sqlPar.DbType = DbType.Date;
-            sqlPar.Value = obj.validade_cart;
-			sqlPar.ParameterName = "@validade_cart";
-            colPar.Add(sqlPar);
-            
-
-			strSQL = "Insert into PACIENTE (CNPJCPF, nome, DATA_NASCIM, sexo, rg, EST_CIVIL, profissao, NOMEPAI," +
-				"NOMEMAE, convenio, CONVENIO_PLANO, NRCONVENIO, TITULAR, CONVENIO_VALIDADE_CARTEIRA, CEP, BAIRRO, " +
-				"Celular, FONERESID, EMAIL";
-			
+				strSQL = "Insert into PACIENTE (cnpjcpf, nome, data_nascim, sexo, rg, est_civil, profissao, " +
+    				"nomepai, nomemae, convenio, convenio_plano, nrconvenio, titular, convenio_validade_carteira, " +
+    				"cep, bairro, celular, foneresid, email) values (@cpf, @nome, @nascimento, @sexo, @rg, @estadocivil, " +
+    				"@profissao, @pai, @mae, @convenio, @plano, @carteirinha, @titular, @validade_cart, @cep, " +
+    				"@bairro, @celular, @telefone, @email)";
+			}
+			else
+			{
+				strSQL = "Update PACIENTE set cnpjcpf=@cpf, nome=@nome, data_nascim=@nascimento, sexo=@sexo, " +
+					"rg=@rg, est_civil=@estadocivil, profissao=@profissao, nomepai=@pai, nomemae=@mae, " +
+					"convenio=@convenio, convenio_plano=@plano, nrconvenio=@carteirinha, titular=@titular, " +
+					"convenio_validade_carteira=@validade_cart, cep=@cep, bairro=@bairro, celular=@celular, " +
+					"foneresid=@telefone, email=@email where codigo=@codigo";
+			}
+			cn.ExecuteWithParam(strSQL, colPar);
 
 			return "Ok";
 		}
-
+         
 		[WebMethod]
 		public string getPacienteCPF(string strCPF)
         {
@@ -237,4 +127,28 @@ namespace hsm_portal_medico
 			return JsonConvert.SerializeObject(tb, Newtonsoft.Json.Formatting.None);
         }
 	}
+
+	public class objPaciente
+    {
+        public int codigo { get; set; }
+        public string cpf { get; set; }
+        public string nome { get; set; }
+        public DateTime nascimento { get; set; }
+        public string sexo { get; set; }
+        public string rg { get; set; }
+        public int estadocivil { get; set; }
+        public int profissao { get; set; }
+        public string pai { get; set; }
+        public string mae { get; set; }
+        public int convenio { get; set; }
+        public string plano { get; set; }
+        public string carteirinha { get; set; }
+        public string titular { get; set; }
+        public DateTime validade_cart { get; set; }
+        public string cep { get; set; }
+        public string bairro { get; set; }
+        public string celular { get; set; }
+        public string telefone { get; set; }
+        public string email { get; set; }
+    }
 }

@@ -108,7 +108,7 @@ app.controller("PacientesCtrl", function ($scope, $http, PacienteService) {
         objPaciente["plano"] = $scope.plano
         objPaciente["carteirinha"] = $scope.carteirinha
         objPaciente["titular"] = $scope.titular
-        objPaciente["validade_cart"] = $scope.validade_cart
+        if ($scope.validade_cart!=null) {objPaciente["validade_cart"] = $scope.validade_cart}
         objPaciente["bairro"] = $scope.bairro
         objPaciente["celular"] = $scope.celular
         objPaciente["telefone"] = $scope.telefone
@@ -158,7 +158,7 @@ app.controller("PacientesCtrl", function ($scope, $http, PacienteService) {
         $scope.plano = ''
         $scope.carteirinha = ''
         $scope.titular = ''
-        $scope.validade_cart = new Date()
+        $scope.validade_cart = null
         $scope.cep = ''
         $scope.bairro = ''
         $scope.celular = ''
@@ -171,7 +171,7 @@ app.controller("PacientesCtrl", function ($scope, $http, PacienteService) {
 
                 if(paci.length!=0){
                     var paci = paci[0]
-
+                    alert(paci.validade_cart)
                     $scope.codigo = paci.codigo
                     $scope.nome = paci.nome
                     $scope.nascimento = new Date(paci.nascimento)
@@ -185,7 +185,7 @@ app.controller("PacientesCtrl", function ($scope, $http, PacienteService) {
                     $scope.plano = paci.plano
                     $scope.carteirinha = paci.carteirinha
                     $scope.titular = paci.titular
-                    $scope.validade_cart = new Date(paci.validade_cart)
+                    if (paci.validade_cart!=null) {$scope.validade_cart = new Date(paci.validade_cart)}
                     $scope.cep = paci.cep
                     $scope.bairro = paci.bairro
                     $scope.celular = paci.celular
