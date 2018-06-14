@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vuetify Example Pen</title>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'>
+    <link rel='stylesheet prefetch' href='https://unpkg.com/vuetify@1.0.19/dist/vuetify.min.css'>
+</head>
+
+<body>
+    <div id="app">
+        <v-app id="inspire">
+            <v-container fluid grid-list-md>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm6 md3>
+                        <v-text-field v-model="guia" label="Nr.Guia" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md3>
+                        <v-text-field v-model="autorizacao" label="Nr.Autorização" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md3>
+                        <v-menu ref="menu_data_autorizacao" v-model="menu_data_autorizacao" :nudge-right="40" :close-on-content-click="false" lazy
+                            transition="scale-transition" offset-y full-width min-width="290px">
+                            <v-text-field slot="activator" v-model="data_autorizacao_Formatted" label="Data Autorização" prepend-icon="event"></v-text-field>
+                            <v-date-picker locale="pt-br" v-date-picker v-model="data_autorizacao" @input="menu_data_autorizacao = false"></v-date-picker>
+                        </v-menu>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md3>
+                        <v-menu ref="menu_validade_autorizacao" v-model="menu_validade_autorizacao" :nudge-right="40" :close-on-content-click="false"
+                            lazy transition="scale-transition" offset-y full-width min-width="290px">
+                            <v-text-field slot="activator" v-model="validade_autorizacao_Formatted" label="Validade Autorização" prepend-icon="event"></v-text-field>
+                            <v-date-picker locale="pt-br" v-date-picker v-model="validade_autorizacao" @input="menu_validade_autorizacao = false"></v-date-picker>
+                        </v-menu>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm3 md2>
+                        <v-text-field v-model="tempo" label="Tempo Estimado" type="number" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm9 md10>
+                        <v-radio-group label="Tipo de Anestesia" v-model="anestesia" row>
+                            <v-radio label="Local sem anestesista" value="1"></v-radio>
+                            <v-radio label="Local com anestesista" value="2"></v-radio>
+                            <v-radio label="Geral" value="3"></v-radio>
+                        </v-radio-group>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm4 md3>
+                        <v-text-field v-model="procedimento" label="Procedimento"></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm8 md9>
+                        <v-text-field v-model="descricao" label="Descrição"></v-text-field>
+                        <v-btn flat icon color="primary">
+                            <v-icon>check_circle</v-icon>
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
+                <v-data-table :headers="headers" :items="desserts" hide-actions class="elevation-1">
+                    <template slot="items" slot-scope="props">
+                        <td>{{ props.item.procedimento }}</td>
+                        <td>{{ props.item.descricao }}</td>
+                        <td class="justify-center layout px-0">
+                            <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                                <v-icon color="pink">delete</v-icon>
+                            </v-btn>
+                        </td>
+                    </template>
+                </v-data-table>
+            </v-container>
+        </v-app>
+    </div>
+    <script src='https://unpkg.com/babel-polyfill/dist/polyfill.min.js'></script>
+    <script src='https://unpkg.com/vue/dist/vue.js'></script>
+    <script src='https://unpkg.com/vuetify@1.0.19/dist/vuetify.min.js'></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: function data() {
+                return {
+                    lorem: 'Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.',
+                    data_autorizacao: null,
+                    data_autorizacao_Formatted: null,
+                    menu_data_autorizacao: false,
+                    validade_autorizacao: null,
+                    validade_autorizacao_Formatted: null,
+                    menu_validade_autorizacao: false,
+
+                    headers: [
+                        { text: 'Procedimento', align: 'left', value: 'procedimento' },
+                        { text: 'Descrição', align: 'left', value: 'descricao' },
+                        { text: 'Excluir', value: 'procedimento', sortable: false }
+                    ],
+                    desserts: [{ 'procedimento': '10101012', 'descricao': 'Consulta' }],
+                };
+            },
+            watch: {
+                data_autorizacao(val) {
+                    this.data_autorizacao_Formatted = this.formatDate(this.data_autorizacao)
+                },
+                validade_autorizacao(val) {
+                    this.validade_autorizacao_Formatted = this.formatDate(this.validade_autorizacao)
+                },
+            },
+            methods: {
+                formatDate(date) {
+                    if (!date) return null
+
+                    const [year, month, day] = date.split('-')
+                    return `${day}/${month}/${year}`
+                },
+                parseDate(date) {
+
+                    if (!date) return null
+
+                    const [month, day, year] = date.split('/')
+                    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
