@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" style="padding: 0px 20px 0px 20px">
         <v-app id="inspire">
             <v-container fluid grid-list-md>
                 <v-layout row wrap>
@@ -52,22 +52,24 @@
                     </v-flex>
                     <v-flex d-flex xs12 sm8 md9>
                         <v-text-field v-model="descricao" label="Descrição"></v-text-field>
-                        <v-btn flat icon color="primary">
+                        <v-btn flat icon color="primary" @click="addItem()">
                             <v-icon>check_circle</v-icon>
                         </v-btn>
                     </v-flex>
                 </v-layout>
-                <v-data-table :headers="headers" :items="desserts" hide-actions class="elevation-1">
+
+                <v-data-table :headers="headers" :items="procedimentos" hide-actions>
                     <template slot="items" slot-scope="props">
                         <td>{{ props.item.procedimento }}</td>
                         <td>{{ props.item.descricao }}</td>
-                        <td class="justify-center layout px-0">
-                            <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                        <td>
+                            <v-btn icon class="mx-0" @click="delItem(props.item)">
                                 <v-icon color="pink">delete</v-icon>
                             </v-btn>
                         </td>
                     </template>
                 </v-data-table>
+
             </v-container>
         </v-app>
     </div>
@@ -92,7 +94,7 @@
                         { text: 'Descrição', align: 'left', value: 'descricao' },
                         { text: 'Excluir', value: 'procedimento', sortable: false }
                     ],
-                    desserts: [{ 'procedimento': '10101012', 'descricao': 'Consulta' }],
+                    procedimentos: [{ 'procedimento': '10101012', 'descricao': 'Consulta' }],
                 };
             },
             watch: {
@@ -104,12 +106,26 @@
                 },
             },
             methods: {
+                delItem(item) {
+                    const index = this.procedimentos.indexOf(item)
+                    confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
+                },
+                
+                addItem() {
+                    this.procedimentos.push({
+                        'procedimento': this.procedimento, 'descricao': this.descricao
+                    })
+                    this.procedimento = null
+                    this.descricao = null
+                },
+
                 formatDate(date) {
                     if (!date) return null
 
                     const [year, month, day] = date.split('-')
                     return `${day}/${month}/${year}`
                 },
+
                 parseDate(date) {
 
                     if (!date) return null
