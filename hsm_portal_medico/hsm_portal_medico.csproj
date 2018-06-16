@@ -33,7 +33,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Serialization" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -68,6 +68,7 @@
     <Content Include="packages.config" />
     <Content Include="xcirurgia.htm" />
     <Content Include="layout.htm" />
+    <Content Include="cirurgia.htm" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

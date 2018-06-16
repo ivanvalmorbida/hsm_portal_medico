@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
 using Newtonsoft.Json;
+//using System.Web.Script.Services;
 
 namespace hsm_portal_medico
 {
@@ -13,6 +14,7 @@ namespace hsm_portal_medico
     public class cirurgia : System.Web.Services.WebService
     {
 		[WebMethod]
+		//[ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
 		public string getCirurgiaCod(string strCod)
 		{
 			Conexao cn = new Conexao();
