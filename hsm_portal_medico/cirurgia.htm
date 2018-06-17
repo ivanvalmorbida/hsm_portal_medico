@@ -47,11 +47,9 @@
                     </v-flex>
                 </v-layout>
                 <v-layout row wrap>
-                    <v-flex d-flex xs12 sm4 md3>
-                        <v-text-field v-model="procedimento" label="Procedimento" @change="BuscarCodigo()"></v-text-field>
-                    </v-flex>
-                    <v-flex d-flex xs12 sm8 md9>
-                        <v-text-field v-model="descricao" label="Descrição"></v-text-field>
+                    <v-flex d-flex xs12 sm12 md12>
+                        <v-select :loading="loading" :items="items" :search-input.sync="search" v-model="procedimento" label="Procedimento Cirurgico" autocomplete
+                            return-object ></v-select>
                         <v-btn flat icon color="primary" @click="addItem()">
                             <v-icon>check_circle</v-icon>
                         </v-btn>
@@ -84,33 +82,51 @@
                     guia: null, autorizacao: null, data_autorizacao: null,
                     data_autorizacao_Formatted: null, menu_data_autorizacao: false,
                     validade_autorizacao: null, validade_autorizacao_Formatted: null,
-                    menu_validade_autorizacao: false,
-                    tempo: null, anestesia: null, procedimento: null, descricao: null,
+                    menu_validade_autorizacao: false, tempo: null, anestesia: null, procedimento: [],
 
                     headers: [
                         { text: 'Procedimento', align: 'left', value: 'procedimento' },
                         { text: 'Descrição', align: 'left', value: 'descricao' },
                         { text: 'Excluir', value: 'procedimento', sortable: false }
                     ],
-                    procedimentos: [{ 'procedimento': '10101012', 'descricao': 'Consulta' }],
+                    procedimentos: [],
+
+                    loading: false,
+                    items: [],
+                    search: null,
                 };
             },
+
             watch: {
+                search(val) {
+                    val && this.querySelections(val)
+                },
+
                 data_autorizacao(val) {
                     this.data_autorizacao_Formatted = this.formatDate(this.data_autorizacao)
                 },
+
                 validade_autorizacao(val) {
                     this.validade_autorizacao_Formatted = this.formatDate(this.validade_autorizacao)
                 },
             },
+
+            created() {
+                //////////
+                //////////
+            },
+
             methods: {
-                BuscarCodigo() {
-                    this.$http.post("cirurgia.asmx/getCirurgiaCod", {strCod: this.procedimento})
-                    .then((res)=>{
-                       var r = JSON.parse(res.data.d)
-                       if (r.length!=0) this.descricao = r[0].Nome 
-                       else this.descricao = ''
-                    })
+                querySelections(v) {
+                    if (v.length > 2) {
+                        this.loading = true
+                        this.$http.post("cirurgia.asmx/getCirurgiaNom", { strNom: v })
+                            .then((res) => {
+                                var r = JSON.parse(res.data.d)
+                                this.loading = false
+                                this.items = r
+                            })
+                    }
                 },
 
                 delItem(item) {
@@ -120,10 +136,9 @@
 
                 addItem() {
                     this.procedimentos.push({
-                        'procedimento': this.procedimento, 'descricao': this.descricao
+                        'procedimento': this.procedimento.value, 'descricao': this.procedimento.nome
                     })
                     this.procedimento = null
-                    this.descricao = null
                 },
 
                 formatDate(date) {

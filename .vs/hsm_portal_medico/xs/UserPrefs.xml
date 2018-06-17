@@ -1,23 +1,5 @@
 ﻿<Properties StartupConfiguration="{5D8877DD-0485-4DDE-82BD-87D50737A4D3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="hsm_portal_medico/cirurgia.asmx.cs">
-    <Files>
-      <File FileName="hsm_portal_medico/cirurgia.asmx" Line="1" Column="1" />
-      <File FileName="hsm_portal_medico/cirurgia.asmx.cs" Line="15" Column="14" />
-      <File FileName="hsm_portal_medico/Web.config" Line="29" Column="17" />
-    </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="hsm_portal_medico" expanded="True">
-            <Node name="hsm_portal_medico" expanded="True">
-              <Node name="References" expanded="True" selected="True" />
-              <Node name="cirurgia.asmx" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>

@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using Newtonsoft.Json;
 //using System.Web.Script.Services;
+//[ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
 
 namespace hsm_portal_medico
 {
@@ -13,8 +14,7 @@ namespace hsm_portal_medico
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class cirurgia : System.Web.Services.WebService
     {
-		[WebMethod]
-		//[ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+		[WebMethod]	
 		public string getCirurgiaCod(string strCod)
 		{
 			Conexao cn = new Conexao();
@@ -31,6 +31,35 @@ namespace hsm_portal_medico
 			strSQL.Append("SELECT Codigo, Nome FROM Exame where Codigo=@Cod").AppendLine();
 
             tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Cirurgia", colPar).Tables[0];
+
+            return JsonConvert.SerializeObject(tb, Formatting.None);			
+		}
+
+		[WebMethod]	
+		public string getCirurgiaNom(string strNom)
+		{
+			Conexao cn = new Conexao();
+            StringBuilder strSQL = new StringBuilder();
+            DataTable tb;
+
+			strSQL.Append("SELECT nome, Codigo as value, Codigo+' - '+Nome as text FROM Exame").AppendLine();
+            strSQL.Append("where nome like '%"+strNom+"%' or codigo like '%"+strNom+"%' order by nome").AppendLine();
+
+            tb = cn.OpenDataSet(strSQL.ToString(), "Cirurgia").Tables[0];
+
+            return JsonConvert.SerializeObject(tb, Formatting.None);			
+		}
+
+		[WebMethod]	
+		public string getCirurgias()
+		{
+			Conexao cn = new Conexao();
+            StringBuilder strSQL = new StringBuilder();
+            DataTable tb;
+
+			strSQL.Append("SELECT Codigo as value, Nome as text FROM Exame order by text").AppendLine();
+
+            tb = cn.OpenDataSet(strSQL.ToString(), "Cirurgia").Tables[0];
 
             return JsonConvert.SerializeObject(tb, Formatting.None);			
 		}
