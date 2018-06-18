@@ -77,7 +77,7 @@ namespace hsm_portal_medico
 			Conexao cn = new Conexao();
             DataTable tb;
 
-			tb = cn.OpenDataSet("SELECT Codigo, Nome FROM ESTADO_CIVIL Order by NOME", "EstadoCivil").Tables[0];
+			tb = cn.OpenDataSet("SELECT Codigo as value, Nome as text FROM ESTADO_CIVIL Order by NOME", "EstadoCivil").Tables[0];
 
 			return JsonConvert.SerializeObject(tb, Newtonsoft.Json.Formatting.None);
 		}
@@ -88,7 +88,7 @@ namespace hsm_portal_medico
             Conexao cn = new Conexao();
             DataTable tb;
 
-    		tb = cn.OpenDataSet("SELECT Codigo, Nome FROM TABPROFISSOES Order by NOME", "Profissoes").Tables[0];
+    		tb = cn.OpenDataSet("SELECT Codigo as value, Nome as text FROM TABPROFISSOES Order by NOME", "Profissoes").Tables[0];
 
 			return JsonConvert.SerializeObject(tb, Newtonsoft.Json.Formatting.None);
         }
@@ -99,7 +99,7 @@ namespace hsm_portal_medico
             Conexao cn = new Conexao();
             DataTable tb;
 
-			tb = cn.OpenDataSet("SELECT Codigo, Nome FROM CONVENIO Order by NOME", "Convenios").Tables[0];
+			tb = cn.OpenDataSet("SELECT Codigo as value, Nome as text FROM CONVENIO Order by NOME", "Convenios").Tables[0];
 
 			return JsonConvert.SerializeObject(tb, Newtonsoft.Json.Formatting.None);
         }
@@ -110,7 +110,7 @@ namespace hsm_portal_medico
             Conexao cn = new Conexao();
             DataTable tb;
 
-			tb = cn.OpenDataSet("SELECT Codigo, Nome FROM BAIRRO Where NOME<>'' Order by NOME", "Bairros").Tables[0];
+			tb = cn.OpenDataSet("SELECT Codigo as value, Nome as text FROM BAIRRO Where NOME<>'' Order by NOME", "Bairros").Tables[0];
 
 			return JsonConvert.SerializeObject(tb, Newtonsoft.Json.Formatting.None);
         }

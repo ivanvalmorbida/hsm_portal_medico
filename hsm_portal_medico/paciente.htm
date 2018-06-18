@@ -1,10 +1,281 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Paciente - HSM Portal Medico</title>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'>
+    <link rel='stylesheet prefetch' href='https://unpkg.com/vuetify@1.0.19/dist/vuetify.min.css'>
+</head>
+
+<body>
+    <div id="app" style="padding: 0px 20px 0px 20px">
+        <v-app id="inspire">
+            <v-container fluid grid-list-md>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm3 md2>
+                        <v-text-field mask="###.###.###-##" v-model="cpf" label="CPF" required @change="BuscarCPF()"></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md8>
+                        <v-text-field v-model="nome" label="Nome" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm3 md2>
+                        <v-menu ref="menu_nascimento" v-model="menu_nascimento" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
+                            offset-y full-width min-width="290px">
+                            <v-text-field slot="activator" v-model="nascimento_Formatted" label="Nascimento" prepend-icon="event"></v-text-field>
+                            <v-date-picker locale="pt-br" v-model="nascimento" @input="menu_nascimento = false"></v-date-picker>
+                        </v-menu>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm4 md3>
+                        <v-radio-group label="Sexo" v-model="sexo" row>
+                            <v-radio label="Masculino" value="M"></v-radio>
+                            <v-radio label="Feminino" value="F"></v-radio>
+                        </v-radio-group>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md2>
+                        <v-text-field v-model="rg" label="RG" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md3>
+                        <v-select :items="estadocivil_items" v-model="estadocivil" label="Estado Civil" return-object></v-select>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md4>
+                        <v-select :items="profissao_items" v-model="profissao" label="Profissão" return-object></v-select>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm6 md6>
+                        <v-text-field v-model="pai" label="Nome do Pai" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md6>
+                        <v-text-field v-model="mae" label="Nome da Mãe" required></v-text-field>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm6 md6>
+                        <v-select :items="convenio_items" v-model="convenio" label="Convênio" return-object></v-select>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md6>
+                        <v-text-field v-model="plano" label="Plano" required></v-text-field>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm4 md4>
+                        <v-text-field v-model="carteirinha" label="Nº Carteirinha" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm4 md4>
+                        <v-menu ref="menu_validade_cart" v-model="menu_validade_cart" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
+                            offset-y full-width min-width="290px">
+                            <v-text-field slot="activator" v-model="validade_cart_Formatted" label="Validade Carteirinha" prepend-icon="event"></v-text-field>
+                            <v-date-picker locale="pt-br" v-model="validade_cart" @input="menu_validade_cart = false"></v-date-picker>
+                        </v-menu>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm4 md4>
+                        <v-text-field v-model="titular" label="Titular" required></v-text-field>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm2 md2>
+                        <v-text-field mask="##.###-###" v-model="cep" label="CEP" required @change="BuscarCEP()"></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm4 md4>
+                        <v-text-field v-model="cidade" label="Cidade" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm2 md2>
+                        <v-text-field v-model="uf" label="UF" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm4 md4>
+                        <v-select :items="bairro_items" v-model="bairro" label="Bairro" return-object></v-select>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex d-flex xs12 sm3 md3>
+                        <v-text-field v-model="contato" label="Contato" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm3 md3>
+                        <v-text-field mask="(##) #####-####" v-model="celular" label="Celular" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm3 md3>
+                        <v-text-field mask="(##) ####-####" v-model="telefone" label="Telefone" required></v-text-field>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm3 md3>
+                        <v-text-field v-model="email" label="E-mail" required :rules="[rules.email]"></v-text-field>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-app>
+    </div>
+    <script src='https://unpkg.com/babel-polyfill/dist/polyfill.min.js'></script>
+    <script src='https://unpkg.com/vue/dist/vue.js'></script>
+    <script src='https://unpkg.com/vuetify@1.0.19/dist/vuetify.min.js'></script>
+    <script src='https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.min.js'></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: function data() {
+                return {
+                    rules: {
+                        required: (value) => !!value || 'Required.',
+                        email: (value) => {
+                            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                            return pattern.test(value) || 'E-mail inválido.'
+                        }
+                    },
+                    cpf: null, nome: null, nascimento: null, menu_nascimento: false,
+                    nascimento_Formatted: null, sexo: null, estadocivil_items: [], rg: null,
+                    estadocivil: null, profissao: null, profissao_items: [], convenio: null,
+                    convenio_items: [], plano: null, carteirinha: null, validade_cart: null,
+                    titular: null, pai: null, mae: null, cep: null, cidade: null, uf: null,
+                    bairro_items: [], bairro: null, contato: null, celular: null, telefone: null,
+                    email: null, validade_cart: null, menu_validade_cart: false,
+                    validade_cart_Formatted: null
+                };
+            },
+
+            watch: {
+                nascimento(val) {
+                    this.nascimento_Formatted = this.formatDate(this.nascimento)
+                },
+
+                validade_cart(val) {
+                    this.validade_cart_Formatted = this.formatDate(this.validade_cart)
+                },
+            },
+
+            created() {
+                this.$http.post("paciente.asmx/getEstadoCivil")
+                    .then((res) => {
+                        this.estadocivil_items = JSON.parse(res.data.d)
+                    })
+
+                this.$http.post("paciente.asmx/getProfissoes")
+                    .then((res) => {
+                        this.profissao_items = JSON.parse(res.data.d)
+                    })
+
+                this.$http.post("paciente.asmx/getConvenio")
+                    .then((res) => {
+                        this.convenio_items = JSON.parse(res.data.d)
+                    })
+
+                this.$http.post("paciente.asmx/getBairro")
+                    .then((res) => {
+                        this.bairro_items = JSON.parse(res.data.d)
+                    })
+            },
+
+            methods: {
+
+                gravar() {
+                    var objPaciente = new Object();
+                    objPaciente["codigo"] = this.codigo
+                    objPaciente["cpf"] = this.cpf
+                    objPaciente["nome"] = this.nome
+                    objPaciente["nascimento"] = this.nascimento
+                    objPaciente["sexo"] = this.sexo
+                    objPaciente["rg"] = this.rg
+                    objPaciente["estadocivil"] = this.estadocivil
+                    objPaciente["profissao"] = this.profissao
+                    objPaciente["pai"] = this.pai
+                    objPaciente["mae"] = this.mae
+                    objPaciente["convenio"] = this.convenio
+                    objPaciente["plano"] = this.plano
+                    objPaciente["carteirinha"] = this.carteirinha
+                    objPaciente["titular"] = this.titular
+                    if (this.validade_cart != null) { objPaciente["validade_cart"] = this.validade_cart }
+                    objPaciente["bairro"] = this.bairro
+                    objPaciente["celular"] = this.celular
+                    objPaciente["telefone"] = this.telefone
+                    objPaciente["email"] = this.email
+                    
+                    this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
+                    .then((res) => {
+                        //this.est_civ = JSON.parse(response)
+                    })
+                },
+                BuscarCPF() {
+                    if (this.cpf != undefined) { cpf = this.cpf.replace('.', '').replace('-', '') } else { cpf = '' }
+                    this.codigo = 0
+                    this.nome = ''
+                    this.nascimento = null
+                    this.sexo = ''
+                    this.rg = ''
+                    this.estadocivil = 0
+                    this.profissao = 0
+                    this.pai = ''
+                    this.mae = ''
+                    this.convenio = 0
+                    this.plano = ''
+                    this.carteirinha = ''
+                    this.titular = ''
+                    this.validade_cart = null
+                    this.cep = ''
+                    this.bairro = ''
+                    this.celular = ''
+                    this.telefone = ''
+                    this.email = ''
+                    if (cpf.length == 11) {
+
+                        this.$http.post("paciente.asmx/getPacienteCPF", { strCPF: this.cpf })
+                            .then((res) => {
+                                paci = JSON.parse(res.data.d)
+                                if (paci.length != 0) {
+                                    var paci = paci[0]
+                                    this.codigo = paci.codigo
+                                    this.nome = paci.nome
+                                    //this.nascimento = new Date(paci.nascimento)
+                                    this.sexo = paci.sexo
+                                    this.rg = paci.rg
+                                    this.estadocivil = paci.estadocivil
+                                    this.profissao = paci.profissao
+                                    this.pai = paci.pai
+                                    this.mae = paci.mae
+                                    this.convenio = paci.convenio
+                                    this.plano = paci.plano
+                                    this.carteirinha = paci.carteirinha
+                                    this.titular = paci.titular
+                                    if (paci.validade_cart != null) { this.validade_cart = new Date(paci.validade_cart) }
+                                    this.cep = paci.cep
+                                    this.bairro = paci.bairro
+                                    this.celular = paci.celular
+                                    this.telefone = paci.telefone.substring(1, 12).replace(' ', '')
+                                    this.email = paci.email
+
+                                    this.BuscarCEP()
+                                }
+                            })
+                    }
+                },
+
+                BuscarCEP() {
+                    this.$http.post("paciente.asmx/getCEP", { strCep: this.cep })
+                        .then((res) => {
+                            cep = JSON.parse(res.data.d)
+                            if (cep.length > 0) {
+                                this.cidade = cep[0].Cidade
+                                this.uf = cep[0].UF
+                            }
+                        })
+                },
+
+                formatDate(date) {
+                    if (!date) return null
+
+                    const [year, month, day] = date.split('-')
+                    return `${day}/${month}/${year}`
+                },
+
+                parseDate(date) {
+                    if (!date) return null
+
+                    const [month, day, year] = date.split('/')
+                    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>

@@ -69,6 +69,7 @@
     <Content Include="xcirurgia.htm" />
     <Content Include="layout.htm" />
     <Content Include="cirurgia.htm" />
+    <Content Include="paciente.htm" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

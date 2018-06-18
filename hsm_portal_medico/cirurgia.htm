@@ -23,14 +23,14 @@
                         <v-menu ref="menu_data_autorizacao" v-model="menu_data_autorizacao" :nudge-right="40" :close-on-content-click="false" lazy
                             transition="scale-transition" offset-y full-width min-width="290px">
                             <v-text-field slot="activator" v-model="data_autorizacao_Formatted" label="Data Autorização" prepend-icon="event"></v-text-field>
-                            <v-date-picker locale="pt-br" v-date-picker v-model="data_autorizacao" @input="menu_data_autorizacao = false"></v-date-picker>
+                            <v-date-picker locale="pt-br" v-model="data_autorizacao" @input="menu_data_autorizacao = false"></v-date-picker>
                         </v-menu>
                     </v-flex>
                     <v-flex d-flex xs12 sm6 md3>
                         <v-menu ref="menu_validade_autorizacao" v-model="menu_validade_autorizacao" :nudge-right="40" :close-on-content-click="false"
                             lazy transition="scale-transition" offset-y full-width min-width="290px">
                             <v-text-field slot="activator" v-model="validade_autorizacao_Formatted" label="Validade Autorização" prepend-icon="event"></v-text-field>
-                            <v-date-picker locale="pt-br" v-date-picker v-model="validade_autorizacao" @input="menu_validade_autorizacao = false"></v-date-picker>
+                            <v-date-picker locale="pt-br" v-model="validade_autorizacao" @input="menu_validade_autorizacao = false"></v-date-picker>
                         </v-menu>
                     </v-flex>
                 </v-layout>
