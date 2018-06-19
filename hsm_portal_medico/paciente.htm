@@ -197,25 +197,27 @@
                 },
                 BuscarCPF() {
                     if (this.cpf != undefined) { cpf = this.cpf.replace('.', '').replace('-', '') } else { cpf = '' }
-                    this.codigo = 0
-                    this.nome = ''
+                    
+                    this.codigo = null
+                    this.nome = null
                     this.nascimento = null
-                    this.sexo = ''
-                    this.rg = ''
-                    this.estadocivil = 0
-                    this.profissao = 0
-                    this.pai = ''
-                    this.mae = ''
-                    this.convenio = 0
-                    this.plano = ''
-                    this.carteirinha = ''
-                    this.titular = ''
+                    this.sexo = null
+                    this.rg = null
+                    this.estadocivil = null
+                    this.profissao = null
+                    this.pai = null
+                    this.mae = null
+                    this.convenio = null
+                    this.plano = null
+                    this.carteirinha = null
+                    this.titular = null
                     this.validade_cart = null
-                    this.cep = ''
-                    this.bairro = ''
-                    this.celular = ''
-                    this.telefone = ''
-                    this.email = ''
+                    this.cep = null
+                    this.bairro = null
+                    this.celular = null
+                    this.telefone = null
+                    this.email = null
+
                     if (cpf.length == 11) {
 
                         this.$http.post("paciente.asmx/getPacienteCPF", { strCPF: this.cpf })
@@ -225,7 +227,7 @@
                                     var paci = paci[0]
                                     this.codigo = paci.codigo
                                     this.nome = paci.nome
-                                    //this.nascimento = new Date(paci.nascimento)
+                                    if (paci.nascimento != null) this.nascimento = paci.nascimento.substring(0,10)
                                     this.sexo = paci.sexo
                                     this.rg = paci.rg
                                     this.estadocivil = paci.estadocivil
@@ -236,7 +238,7 @@
                                     this.plano = paci.plano
                                     this.carteirinha = paci.carteirinha
                                     this.titular = paci.titular
-                                    if (paci.validade_cart != null) { this.validade_cart = new Date(paci.validade_cart) }
+                                    if (paci.validade_cart != null) this.validade_cart = paci.validade_cart.substring(0,10)
                                     this.cep = paci.cep
                                     this.bairro = paci.bairro
                                     this.celular = paci.celular
