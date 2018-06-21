@@ -15,6 +15,9 @@ namespace hsm_portal_medico
 		[WebMethod]
 		public string setPacienteCPF(objPaciente obj)
 		{
+			if (obj.cep!=null) 
+				obj.cep = obj.cep.Replace(".", "").Replace("-", "");
+			
             Conexao cn = new Conexao();
             SqlParameter sqlPar = new SqlParameter();
 			string strSQL;

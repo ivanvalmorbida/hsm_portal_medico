@@ -61,13 +61,9 @@
     <Compile Include="cirurgia.asmx.cs">
       <DependentUpon>cirurgia.asmx</DependentUpon>
     </Compile>
-    <Content Include="cirurgia.html" />
     <Content Include="login.aspx" />
     <Content Include="paciente.asmx" />
-    <Content Include="paciente.html" />
     <Content Include="packages.config" />
-    <Content Include="xcirurgia.htm" />
-    <Content Include="layout.htm" />
     <Content Include="cirurgia.htm" />
     <Content Include="paciente.htm" />
   </ItemGroup>

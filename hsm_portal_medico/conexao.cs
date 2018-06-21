@@ -169,8 +169,20 @@ public sealed class Conexao
             {
                 sqlPar = new SqlParameter();
 				sqlPar.DbType = TipoDB(p.PropertyType.Name);
-                sqlPar.Value = p.GetValue(objX, null);
+				if (sqlPar.DbType == DbType.DateTime)
+				{
+					if (p.GetValue(objX, null).ToString() == "01/01/0001 00:00:00")
+						sqlPar.Value = DBNull.Value;
+					else
+						sqlPar.Value = p.GetValue(objX, null);
+				}
+				else
+					sqlPar.Value = p.GetValue(objX, null);
                 sqlPar.ParameterName = "@" + p.Name;
+
+				if (sqlPar.Value == null)
+					sqlPar.Value = DBNull.Value;
+				
                 colPar.Add(sqlPar);
             }
         }
