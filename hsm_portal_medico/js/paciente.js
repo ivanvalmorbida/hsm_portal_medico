@@ -71,7 +71,7 @@
             objPaciente["carteirinha"] = this.carteirinha
             objPaciente["titular"] = this.titular
             objPaciente["cep"] = this.cep
-            if (this.validade_cart != null) { objPaciente["validade_cart"] = this.validade_cart }
+            objPaciente["validade_cart"] = this.validade_cart
             objPaciente["bairro"] = this.bairro
             objPaciente["celular"] = this.celular
             objPaciente["telefone"] = this.telefone
@@ -156,11 +156,5 @@
             const [year, month, day] = date.split('-')
             return `${day}/${month}/${year}`
         }
-
-        /*parseDate(date) {
-            if (!date) return null
-            const [month, day, year] = date.split('/')
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-        }*/
     }
 });

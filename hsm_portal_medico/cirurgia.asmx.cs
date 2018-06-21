@@ -34,14 +34,14 @@ namespace hsm_portal_medico
 		}
 
 		[WebMethod]	
-		public string getCirurgiaNom(string strNom)
+		public string getCirurgiaNomCod(string strX)
 		{
 			Conexao cn = new Conexao();
             StringBuilder strSQL = new StringBuilder();
             DataTable tb;
 
 			strSQL.Append("SELECT nome, Codigo as value, Codigo+' - '+Nome as text FROM Exame").AppendLine();
-            strSQL.Append("where nome like '%"+strNom+"%' or codigo like '%"+strNom+"%' order by nome").AppendLine();
+            strSQL.Append("where nome like '%"+strX+"%' or codigo like '%"+strX+"%' order by nome").AppendLine();
 
             tb = cn.OpenDataSet(strSQL.ToString(), "Cirurgia").Tables[0];
 
