@@ -79,7 +79,8 @@
             
             this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
             .then((res) => {
-                //this.est_civ = JSON.parse(res)
+                //
+                //
             })
         },
         BuscarCPF() {
@@ -154,13 +155,13 @@
 
             const [year, month, day] = date.split('-')
             return `${day}/${month}/${year}`
-        },
+        }
 
-        parseDate(date) {
+        /*parseDate(date) {
             if (!date) return null
 
             const [month, day, year] = date.split('/')
             return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-        }
+        }*/
     }
 });
