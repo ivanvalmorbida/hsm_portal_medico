@@ -39,24 +39,8 @@
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
-    <Content Include="css\cirurgia.css" />
-    <Content Include="css\paciente.css" />
-    <Content Include="css\lib\angular-material.min.css" />
-    <Content Include="css\lib\bootstrap.css" />
-    <Content Include="img\seta-direita.svg" />
     <Content Include="js\cirurgia.js" />
     <Content Include="js\paciente.js" />
-    <Content Include="js\lib\angular-animate.min.js" />
-    <Content Include="js\lib\angular-aria.min.js" />
-    <Content Include="js\lib\angular-material.min.js" />
-    <Content Include="js\lib\angular-messages.min.js" />
-    <Content Include="js\lib\angular.min.js" />
-    <Content Include="js\lib\angular.soap.js" />
-    <Content Include="js\lib\bootstrap.min.js" />
-    <Content Include="js\lib\jquery.min.js" />
-    <Content Include="js\lib\mask.js" />
-    <Content Include="js\lib\moment.min.js" />
-    <Content Include="js\lib\soapclient.js" />
     <Content Include="cirurgia.asmx" />
     <Compile Include="cirurgia.asmx.cs">
       <DependentUpon>cirurgia.asmx</DependentUpon>

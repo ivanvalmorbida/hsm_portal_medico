@@ -5,8 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
 using Newtonsoft.Json;
-//using System.Web.Script.Services;
-//[ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
 
 namespace hsm_portal_medico
 {
