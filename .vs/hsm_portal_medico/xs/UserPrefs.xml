@@ -1,9 +1,5 @@
 ﻿<Properties StartupConfiguration="{5D8877DD-0485-4DDE-82BD-87D50737A4D3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="hsm_portal_medico/paciente.htm">
-    <Files>
-      <File FileName="hsm_portal_medico/paciente.htm" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
@@ -11,6 +7,6 @@
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.hsm__portal__medico PreferredExecutionTarget="chromium-browser" />
+  <MonoDevelop.Ide.ItemProperties.hsm__portal__medico PreferredExecutionTarget="firefox" />
   <MultiItemStartupConfigurations />
 </Properties>
