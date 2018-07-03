@@ -61,17 +61,5 @@ namespace hsm_portal_medico
 
             return JsonConvert.SerializeObject(tb, Formatting.None);			
 		}
-    }
+	}
 }
-
-
-/*
-
-SELECT DATA_CONSULTA, MIN(HORA) HoraIni, MAX(HORA) HoraFim FROM AGENDA_HOSPITAL 
-WHERE MEDICOEXE=0 AND MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I')
-AND STATUS=(SELECT VALOR FROM PARAMETROS_SOFTWARE Where PARAMETRO='glb_str_STATUS_RESERVA')
-AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5, 
-    iif(datepart(dw, getdate())=1, 4, 3)), getdate()) as DATE)
-GROUP BY DATA_CONSULTA
-
-*/

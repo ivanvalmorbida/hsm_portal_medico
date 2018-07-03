@@ -50,6 +50,10 @@
     <Content Include="packages.config" />
     <Content Include="cirurgia.htm" />
     <Content Include="paciente.htm" />
+    <Content Include="agenda.asmx" />
+    <Compile Include="agenda.asmx.cs">
+      <DependentUpon>agenda.asmx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

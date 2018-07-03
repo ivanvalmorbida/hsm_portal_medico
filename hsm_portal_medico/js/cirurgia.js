@@ -35,6 +35,14 @@
     },
 
     methods: {
+        gravar() {
+            this.$http.post("agenda.asmx/getAgendas",{medico: 1})
+            .then((res) => {
+                //
+                //
+            })
+        },
+
         querySelections(v) {
             if (v.length > 2) {
                 this.loading = true
