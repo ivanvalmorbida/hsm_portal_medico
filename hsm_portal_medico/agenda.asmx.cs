@@ -5,6 +5,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
 using Newtonsoft.Json;
+using System.IO;
+using System.Drawing;
 
 namespace hsm_portal_medico
 {
@@ -12,8 +14,6 @@ namespace hsm_portal_medico
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 	public class agenda : System.Web.Services.WebService
     {
-
-
 		[WebMethod]
         public string getAgendas(int medico, int anestesia, int tempo)
         {
@@ -39,6 +39,33 @@ namespace hsm_portal_medico
 
             return JsonConvert.SerializeObject(tb, Formatting.None);
         }
+        
+        [WebMethod]
+        public string SaveImage(FileData data)
+        {
+            try
+            {
+                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.Data)))
+                {
+					FileStream file = new FileStream("/home/ivan/uploads/" + data.Name, FileMode.Create, FileAccess.Write);
+                    ms.WriteTo(file);
+                    file.Close();
+                    ms.Close();
 
+					return "OK";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public class FileData
+        {
+            public string Data { get; set; }
+            public string ContentType { get; set; }
+            public string Name { get; set; }
+        }
     }
 }

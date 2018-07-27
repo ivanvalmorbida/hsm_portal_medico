@@ -34,6 +34,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -54,6 +55,7 @@
     <Compile Include="agenda.asmx.cs">
       <DependentUpon>agenda.asmx</DependentUpon>
     </Compile>
+    <Content Include="agenda.htm" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

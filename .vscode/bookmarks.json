@@ -1,15 +1,12 @@
-{
-	"onDidClearBookmarkEmitter": {},
-	"onDidClearAllBookmarksEmitter": {},
-	"onDidAddBookmarkEmitter": {},
-	"onDidRemoveBookmarkEmitter": {},
-	"onDidUpdateBookmarkEmitter": {},
-	"bookmarks": [
-		{
-			"fsPath": "$ROOTPATH$/hsm_portal_medico/paciente.htm",
-			"bookmarks": [
-				30
-			]
-		}
-	]
-}
+[
+	{
+		"path": "$ROOTPATH$/hsm_portal_medico/paciente.htm",
+		"bookmarks": [
+			{
+				"line": 30,
+				"column": 1,
+				"label": ""
+			}
+		]
+	}
+]
