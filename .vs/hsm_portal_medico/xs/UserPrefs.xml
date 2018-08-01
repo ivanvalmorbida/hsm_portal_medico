@@ -1,7 +1,8 @@
 ﻿<Properties StartupConfiguration="{5D8877DD-0485-4DDE-82BD-87D50737A4D3}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="hsm_portal_medico/agenda.asmx.cs">
     <Files>
-      <File FileName="hsm_portal_medico/agenda.asmx.cs" Line="55" Column="18" />
+      <File FileName="hsm_portal_medico/agenda.asmx" Line="1" Column="1" />
+      <File FileName="hsm_portal_medico/agenda.asmx.cs" Line="31" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

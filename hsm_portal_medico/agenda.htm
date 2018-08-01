@@ -10,9 +10,31 @@
   <input type="file" id="myFile" accept="image/jpeg">
   <button type="button" onclick='foto_user()'>Enviar</button>
   <img id="user-img" src="/uploads/foto-user-643316.jpg">
+  <button type="button" onclick='foto_user()'>Enviar</button>
 </body>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script>
+  function foto_user() {
+    $.ajax({
+      type: "POST",
+      url: "http://187.115.52.235:3636/webservice/site.asmx/SaveImage",
+      data: '{data : ' + JSON.stringify(obj) + ' }',
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (r) {
+        alert(r);
+      },
+      error: function (r) {
+        alert('error');
+        //alert(r.responseText);
+      },
+      failure: function (r) {
+        alert('fail');
+        //alert(r.responseText);
+      }
+    });
+
+  }
   function foto_user() {
     var preview = document.getElementById('user-img');
     var file = document.getElementById("myFile").files[0];
@@ -33,7 +55,7 @@
 
       $.ajax({
         type: "POST",
-        url: "agenda.asmx/SaveImage",
+        url: "http://187.115.52.235:3636/webservice/site.asmx/SaveImage",
         data: '{data : ' + JSON.stringify(obj) + ' }',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
