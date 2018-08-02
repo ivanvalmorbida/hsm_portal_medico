@@ -15,27 +15,6 @@
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script>
   function foto_user() {
-    $.ajax({
-      type: "POST",
-      url: "http://187.115.52.235:3636/webservice/site.asmx/SaveImage",
-      data: '{data : ' + JSON.stringify(obj) + ' }',
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: function (r) {
-        alert(r);
-      },
-      error: function (r) {
-        alert('error');
-        //alert(r.responseText);
-      },
-      failure: function (r) {
-        alert('fail');
-        //alert(r.responseText);
-      }
-    });
-
-  }
-  function foto_user() {
     var preview = document.getElementById('user-img');
     var file = document.getElementById("myFile").files[0];
     var reader = new FileReader();
@@ -55,7 +34,7 @@
 
       $.ajax({
         type: "POST",
-        url: "http://187.115.52.235:3636/webservice/site.asmx/SaveImage",
+        url: "agenda.asmx/SaveFile",
         data: '{data : ' + JSON.stringify(obj) + ' }',
         contentType: "application/json; charset=utf-8",
         dataType: "json",

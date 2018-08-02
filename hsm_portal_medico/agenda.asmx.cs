@@ -34,7 +34,7 @@ namespace hsm_portal_medico
             strSQL.Append("AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5,").AppendLine(); 
             strSQL.Append("iif(datepart(dw, getdate())=1, 4, 3)), getdate()) as DATE)").AppendLine();
             strSQL.Append("GROUP BY DATA_CONSULTA").AppendLine();
-            strSQL.Append("").AppendLine();       
+            strSQL.Append("Union").AppendLine();       
 			strSQL.Append("SELECT DATA_CONSULTA, MIN(HORA) HoraIni, MAX(HORA) HoraFim FROM AGENDA_HOSPITAL").AppendLine(); 
             strSQL.Append("WHERE Isnull(MEDICOEXE,0)=0 AND MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I')").AppendLine();
             strSQL.Append("AND STATUS=(SELECT VALOR FROM PARAMETROS_SOFTWARE Where PARAMETRO='glb_str_STATUS_RESERVADO')").AppendLine();
@@ -47,7 +47,7 @@ namespace hsm_portal_medico
         }
         
         [WebMethod]
-        public string SaveImage(FileData data)
+        public string SaveFile(FileData data)
         {
             try
             {
