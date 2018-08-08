@@ -10,6 +10,7 @@ namespace hsm_portal_medico
 {
 	[WebService(Namespace = "http://www.example.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.Web.Script.Services.ScriptService()]
     public class cirurgia : System.Web.Services.WebService
     {
 		[WebMethod]	
