@@ -10,6 +10,7 @@
             headers: [
                 { text: 'Procedimento', align: 'left', value: 'procedimento' },
                 { text: 'Descrição', align: 'left', value: 'descricao' },
+                { text: 'Tempo', align: 'left', value: 'tempo' },
                 { text: 'Excluir', value: 'procedimento', sortable: false }
             ],
             procedimentos: [],
@@ -36,11 +37,11 @@
 
     methods: {
         gravar() {
-            this.$http.post("agenda.asmx/getAgendas",{medico: 1})
-            .then((res) => {
-                //
-                //
-            })
+            this.$http.post("agenda.asmx/getAgendas", { medico: 1, anestesia: this.anestesia, tempo: this.tempo })
+                .then((res) => {
+                    //
+                    //
+                })
         },
 
         querySelections(v) {
@@ -55,16 +56,27 @@
             }
         },
 
+
+        totalItem() {
+            this.tempo = 0
+            this.procedimentos.forEach(p => {
+                console.dir(p.tempo)
+                this.tempo += p.tempo
+            });
+        },
+
         delItem(item) {
             const index = this.procedimentos.indexOf(item)
             confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
+            this.totalItem()
         },
 
         addItem() {
             this.procedimentos.push({
-                'procedimento': this.procedimento.value, 'descricao': this.procedimento.nome
+                'procedimento': this.procedimento.value, 'descricao': this.procedimento.nome, 'tempo': this.procedimento.tempo
             })
             this.procedimento = null
+            this.totalItem()
         },
 
         formatDate(date) {

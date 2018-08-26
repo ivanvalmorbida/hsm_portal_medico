@@ -3,7 +3,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/Default.aspx.cs" relfile="hsm_portal_medico/Default.aspx.cs" line="16" column="1" />
+      <Breakpoint file="/home/ivan/hsm_portal_medico/hsm_portal_medico/Default.aspx.cs" relfile="hsm_portal_medico/Default.aspx.cs" line="16" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

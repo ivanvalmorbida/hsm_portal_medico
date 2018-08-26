@@ -27,7 +27,7 @@ namespace hsm_portal_medico
             sqlPar.ParameterName = "@Cod";
             colPar.Add(sqlPar);
 
-			strSQL.Append("SELECT Codigo, Nome FROM Exame where Codigo=@Cod").AppendLine();
+			strSQL.Append("SELECT Codigo, Nome, TempoCirugiaMinutos as tempo FROM Exame where Codigo=@Cod").AppendLine();
 
             tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Cirurgia", colPar).Tables[0];
 
@@ -41,8 +41,8 @@ namespace hsm_portal_medico
             StringBuilder strSQL = new StringBuilder();
             DataTable tb;
 
-			strSQL.Append("SELECT nome, Codigo as value, Codigo+' - '+Nome as text FROM Exame").AppendLine();
-            strSQL.Append("where nome like '%"+strX+"%' or codigo like '%"+strX+"%' order by nome").AppendLine();
+			strSQL.Append("SELECT nome, Codigo as value, Codigo+' - '+Nome as text, TempoCirugiaMinutos as tempo").AppendLine();
+            strSQL.Append("FROM Exame where nome like '%"+strX+"%' or codigo like '%"+strX+"%' order by nome").AppendLine();
 
             tb = cn.OpenDataSet(strSQL.ToString(), "Cirurgia").Tables[0];
 
@@ -56,7 +56,7 @@ namespace hsm_portal_medico
             StringBuilder strSQL = new StringBuilder();
             DataTable tb;
 
-			strSQL.Append("SELECT Codigo as value, Nome as text FROM Exame order by text").AppendLine();
+			strSQL.Append("SELECT Codigo as value, Nome as text, TempoCirugiaMinutos as tempo FROM Exame order by text").AppendLine();
 
             tb = cn.OpenDataSet(strSQL.ToString(), "Cirurgia").Tables[0];
 

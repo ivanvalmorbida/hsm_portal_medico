@@ -13,14 +13,6 @@
         <v-app id="inspire">
             <v-container fluid grid-list-md>
                 <v-layout row wrap>
-                    <v-flex d-flex>
-                        <v-card color="indigo" dark>
-                            <v-btn color="success" @click="gravar()">Success</v-btn>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-
-                <v-layout row wrap>
                     <v-flex d-flex xs12 sm6 md3>
                         <v-text-field v-model="guia" label="Nr.Guia" required></v-text-field>
                     </v-flex>
@@ -67,6 +59,7 @@
                     <template slot="items" slot-scope="props">
                         <td>{{ props.item.procedimento }}</td>
                         <td>{{ props.item.descricao }}</td>
+                        <td>{{ props.item.tempo }}</td>
                         <td>
                             <v-btn icon class="mx-0" @click="delItem(props.item)">
                                 <v-icon color="pink">delete</v-icon>
@@ -74,6 +67,13 @@
                         </td>
                     </template>
                 </v-data-table>
+                <v-layout row wrap>
+                    <v-flex d-flex>
+                        <v-card color="indigo" dark>
+                            <v-btn color="success" @click="gravar()">Success</v-btn>
+                        </v-card>
+                    </v-flex>
+                </v-layout>                
             </v-container>
         </v-app>
     </div>
