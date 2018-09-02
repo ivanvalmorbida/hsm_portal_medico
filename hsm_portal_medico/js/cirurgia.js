@@ -36,6 +36,13 @@
     },
 
     methods: {
+        isAuth() {
+            this.$http.post("medico.asmx/getMedico")
+            .then((res) => {
+                console.dir(res.data.d)
+            })
+        },
+
         gravar() {
             this.$http.post("agenda.asmx/getAgendas", { medico: 1, anestesia: this.anestesia, tempo: this.tempo })
                 .then((res) => {

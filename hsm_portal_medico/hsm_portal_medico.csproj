@@ -56,6 +56,10 @@
       <DependentUpon>agenda.asmx</DependentUpon>
     </Compile>
     <Content Include="agenda.htm" />
+    <Content Include="medico.asmx" />
+    <Compile Include="medico.asmx.cs">
+      <DependentUpon>medico.asmx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
