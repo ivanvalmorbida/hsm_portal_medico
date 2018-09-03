@@ -28,20 +28,36 @@ namespace hsm_portal_medico
 			sqlPar.Value = medico;
             sqlPar.ParameterName = "@Med";
             colPar.Add(sqlPar);
-   
-			strSQL.Append("SELECT DATA_CONSULTA, MIN(HORA) HoraIni, MAX(HORA) HoraFim FROM AGENDA_HOSPITAL").AppendLine(); 
-            strSQL.Append("WHERE MEDICOEXE=@Med AND MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I')").AppendLine();
+
+			sqlPar = new SqlParameter();
+			sqlPar.DbType = DbType.Int32;
+			sqlPar.Value = anestesia;
+			sqlPar.ParameterName = "@Anestesia";
+            colPar.Add(sqlPar);
+            
+			sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = tempo;
+            sqlPar.ParameterName = "@tempo";
+            colPar.Add(sqlPar);
+
+			strSQL.Append("SELECT * from (").AppendLine();
+			strSQL.Append("SELECT DATA_CONSULTA,").AppendLine();
+            strSQL.Append("cast(cast(YEAR(data_consulta) as VARCHAR(4)) + '-' + cast(day(data_consulta) as VARCHAR(2))").AppendLine();
+            strSQL.Append("+ '-' + cast(MONTH(data_consulta) as VARCHAR(2)) + ' ' +").AppendLine();
+			strSQL.Append("iif(MIN(HORA) >= 1000, left(cast(MIN(HORA) as VARCHAR(4)), 2) + ':' + RIGHT(cast(MIN(HORA) as VARCHAR(4)), 2),").AppendLine();
+			strSQL.Append("left(cast(MIN(HORA) as VARCHAR(4)), 1) + ':' + RIGHT(cast(MIN(HORA) as VARCHAR(4)), 2)) as DATETIME) as HoraIni,").AppendLine();
+			strSQL.Append("cast(cast(YEAR(data_consulta) as VARCHAR(4)) + '-' + cast(day(data_consulta) as VARCHAR(2))").AppendLine();
+            strSQL.Append("+ '-' + cast(MONTH(data_consulta) as VARCHAR(2)) + ' ' +").AppendLine();
+			strSQL.Append("iif(MAX(HORA) >= 1000, left(cast(MAX(HORA) as VARCHAR(4)), 2) + ':' + RIGHT(cast(MAX(HORA) as VARCHAR(4)), 2),").AppendLine();
+			strSQL.Append("left(cast(MAX(HORA) as VARCHAR(4)), 1) + ':' + RIGHT(cast(MAX(HORA) as VARCHAR(4)), 2)) as DATETIME) as HoraFim").AppendLine();
+			strSQL.Append("FROM AGENDA_HOSPITAL").AppendLine(); 
+			strSQL.Append("WHERE MEDICOEXE=@Med AND MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I' and TipoAnestesia=@Anestesia)").AppendLine();
             strSQL.Append("AND STATUS=(SELECT VALOR FROM PARAMETROS_SOFTWARE Where PARAMETRO='glb_str_STATUS_RESERVADO')").AppendLine();
             strSQL.Append("AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5,").AppendLine(); 
             strSQL.Append("iif(datepart(dw, getdate())=1, 4, 3)), getdate()) as DATE)").AppendLine();
-            strSQL.Append("GROUP BY DATA_CONSULTA").AppendLine();
-            strSQL.Append("Union").AppendLine();       
-			strSQL.Append("SELECT DATA_CONSULTA, MIN(HORA) HoraIni, MAX(HORA) HoraFim FROM AGENDA_HOSPITAL").AppendLine(); 
-            strSQL.Append("WHERE Isnull(MEDICOEXE,0)=0 AND MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I')").AppendLine();
-            strSQL.Append("AND STATUS=(SELECT VALOR FROM PARAMETROS_SOFTWARE Where PARAMETRO='glb_str_STATUS_RESERVADO')").AppendLine();
-            strSQL.Append("AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5,").AppendLine(); 
-            strSQL.Append("iif(datepart(dw, getdate())=1, 4, 3)), getdate()) as DATE)").AppendLine();
-            strSQL.Append("GROUP BY DATA_CONSULTA").AppendLine();   
+			strSQL.Append("GROUP BY DATA_CONSULTA) as d where datediff (minute, HoraIni, HoraFim)>=@tempo").AppendLine();
+         
 			tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Agenda", colPar).Tables[0];
 
             return JsonConvert.SerializeObject(tb, Formatting.None);
@@ -76,3 +92,7 @@ namespace hsm_portal_medico
         }
     }
 }
+
+
+//UPDATE AGENDA_HOSPITAL set medicoexe=27, status='RES' 
+//where DATA_CONSULTA > getdate() + 5 and datepart(dw, DATA_CONSULTA)= 3

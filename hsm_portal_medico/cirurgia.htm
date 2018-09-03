@@ -70,15 +70,20 @@
                 <v-layout row wrap>
                     <v-flex d-flex>
                         <v-card color="indigo" dark>
-                            <v-btn color="success" @click="gravar()">Success</v-btn>
+                            <v-btn color="success" @click="getAgendas()">Buscar agendas disponiveis</v-btn>
                         </v-card>
-                    </v-flex>
-                    <v-flex d-flex>
-                        <v-card color="indigo" dark>
-                            <v-btn color="success" @click="isAuth()">teste</v-btn>
-                        </v-card>
-                    </v-flex>                    
-                </v-layout>                
+                    </v-flex>                  
+                </v-layout>   
+                <v-data-table :headers="headers_agenda" :items="agendas" hide-actions>
+                    <template slot="items" slot-scope="props">
+                        <td>{{ props.item.HoraIni }}</td>
+                        <td>
+                            <v-btn icon class="mx-0" @click="delItem(props.item)">
+                                <v-icon>check_circle</v-icon>
+                            </v-btn>
+                        </td>
+                    </template>
+                </v-data-table>                             
             </v-container>
         </v-app>
     </div>

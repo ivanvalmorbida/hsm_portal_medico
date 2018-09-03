@@ -15,6 +15,12 @@
             ],
             procedimentos: [],
 
+            headers_agenda: [
+                { text: 'Data hora inicio', align: 'left', value: 'DataIni' },
+                { text: 'Selecionar', value: 'procedimento', sortable: false }
+            ],
+            agendas: [],
+
             loading: false,
             items: [],
             search: null,
@@ -36,19 +42,14 @@
     },
 
     methods: {
-        isAuth() {
-            this.$http.post("medico.asmx/getMedico")
-            .then((res) => {
-                console.dir(res.data.d)
-            })
-        },
-
-        gravar() {
-            this.$http.post("agenda.asmx/getAgendas", { medico: 1, anestesia: this.anestesia, tempo: this.tempo })
-                .then((res) => {
-                    //
-                    //
+        getAgendas() {
+            this.$http.post("medico.asmx/getMedico").then((res) => {
+                //this.$http.post("agenda.asmx/getAgendas", { medico: 1, anestesia: 0, tempo: 0 }).then((res) => {
+                this.$http.post("agenda.asmx/getAgendas", { medico: res.data.d, anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
+                    //console.dir(res.data.d)
+                    this.agendas = JSON.parse(res.data.d)
                 })
+            })
         },
 
         querySelections(v) {
@@ -62,7 +63,6 @@
                     })
             }
         },
-
 
         totalItem() {
             this.tempo = 0
