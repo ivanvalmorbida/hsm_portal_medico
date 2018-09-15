@@ -43,12 +43,12 @@ namespace hsm_portal_medico
 
 			strSQL.Append("SELECT * from (").AppendLine();
 			strSQL.Append("SELECT DATA_CONSULTA,").AppendLine();
-            strSQL.Append("cast(cast(YEAR(data_consulta) as VARCHAR(4)) + '-' + cast(day(data_consulta) as VARCHAR(2))").AppendLine();
-            strSQL.Append("+ '-' + cast(MONTH(data_consulta) as VARCHAR(2)) + ' ' +").AppendLine();
+            strSQL.Append("cast(cast(YEAR(data_consulta) as VARCHAR(4)) + '-' + cast(month(data_consulta) as VARCHAR(2))").AppendLine();
+            strSQL.Append("+ '-' + cast(day(data_consulta) as VARCHAR(2)) + ' ' +").AppendLine();
 			strSQL.Append("iif(MIN(HORA) >= 1000, left(cast(MIN(HORA) as VARCHAR(4)), 2) + ':' + RIGHT(cast(MIN(HORA) as VARCHAR(4)), 2),").AppendLine();
 			strSQL.Append("left(cast(MIN(HORA) as VARCHAR(4)), 1) + ':' + RIGHT(cast(MIN(HORA) as VARCHAR(4)), 2)) as DATETIME) as HoraIni,").AppendLine();
-			strSQL.Append("cast(cast(YEAR(data_consulta) as VARCHAR(4)) + '-' + cast(day(data_consulta) as VARCHAR(2))").AppendLine();
-            strSQL.Append("+ '-' + cast(MONTH(data_consulta) as VARCHAR(2)) + ' ' +").AppendLine();
+			strSQL.Append("cast(cast(YEAR(data_consulta) as VARCHAR(4)) + '-' + cast(month(data_consulta) as VARCHAR(2))").AppendLine();
+            strSQL.Append("+ '-' + cast(day(data_consulta) as VARCHAR(2)) + ' ' +").AppendLine();
 			strSQL.Append("iif(MAX(HORA) >= 1000, left(cast(MAX(HORA) as VARCHAR(4)), 2) + ':' + RIGHT(cast(MAX(HORA) as VARCHAR(4)), 2),").AppendLine();
 			strSQL.Append("left(cast(MAX(HORA) as VARCHAR(4)), 1) + ':' + RIGHT(cast(MAX(HORA) as VARCHAR(4)), 2)) as DATETIME) as HoraFim").AppendLine();
 			strSQL.Append("FROM AGENDA_HOSPITAL").AppendLine(); 

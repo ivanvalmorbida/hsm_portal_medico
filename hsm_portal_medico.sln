@@ -1,6 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hsm_portal_medico", "hsm_portal_medico\hsm_portal_medico.csproj", "{5D8877DD-0485-4DDE-82BD-87D50737A4D3}"
 EndProject
 Global
@@ -13,5 +14,11 @@ Global
 		{5D8877DD-0485-4DDE-82BD-87D50737A4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D8877DD-0485-4DDE-82BD-87D50737A4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D8877DD-0485-4DDE-82BD-87D50737A4D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {850C579A-21AA-4843-A6C5-350457FE31E9}
 	EndGlobalSection
 EndGlobal
