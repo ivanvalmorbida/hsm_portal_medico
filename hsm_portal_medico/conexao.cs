@@ -8,7 +8,7 @@ public sealed class Conexao
 {
     // RESTORE DATABASE [hsm] FROM DISK = N'/home/ivan/Downloads/Hsm4.bak' WITH FILE = 1, NOUNLOAD, REPLACE, NORECOVERY, STATS = 5
     private SqlConnection DBCon = new SqlConnection();
-	private string strConection = "Server=localhost;Database=hsm;User ID=SA;Password=Ivanluis1;Trusted_Connection=False;Connection Timeout=30;Pooling=False;";
+	private string strConection = "Server=localhost;Database=hsm7;User ID=SA;Password=CTInfo&Kleros4002;Trusted_Connection=False;Connection Timeout=30;Pooling=False;";
     private string _MSG;
 
     public string MSG
@@ -56,8 +56,10 @@ public sealed class Conexao
 
     public SqlDataReader OpenReader(string strSQL)
     {
-        if (DBCon.State == ConnectionState.Closed)
-            OpenConection();
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
 
         SqlCommand SQLCommand = new SqlCommand(strSQL, DBCon);
         SqlDataReader SQLReader = SQLCommand.ExecuteReader();
@@ -66,8 +68,10 @@ public sealed class Conexao
 
     public DataSet OpenDataSet(string strSQL, string strTabela)
     {
-        if (DBCon.State == ConnectionState.Closed)
-            OpenConection();
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
 
         SqlDataAdapter SQLDataAd = new SqlDataAdapter(strSQL, DBCon);
         DataSet myDataSet = new DataSet();
@@ -77,16 +81,21 @@ public sealed class Conexao
 
     public SqlDataAdapter DataAdapter(string strSQL)
     {
-        if (DBCon.State == ConnectionState.Closed)
-            OpenConection();
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
+
         SqlDataAdapter SQLDataAd = new SqlDataAdapter(strSQL, DBCon);
         return SQLDataAd;
     }
 
     public void Execute(string strSQL)
     {
-        if (DBCon.State == ConnectionState.Closed)
-            OpenConection();
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
 
         SqlCommand SQLComand = new SqlCommand(strSQL, DBCon);
         try
@@ -102,8 +111,10 @@ public sealed class Conexao
 
 	public void ExecuteWithParam(string strSQL, List<SqlParameter> SQLPar)
     {
-        if (DBCon.State == ConnectionState.Closed)
-            OpenConection();
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
 
         SqlCommand SQLCommandWithPar = new SqlCommand();
 
@@ -121,13 +132,39 @@ public sealed class Conexao
             _MSG = e.Message;
         }
     }
+    public void ExecuteWithParamOld(string strSQL, ArrayList SQLPar)
+    {
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
+
+        SqlCommand SQLCommandWithPar = new SqlCommand();
+
+        SQLCommandWithPar.Connection = DBCon;
+        SQLCommandWithPar.CommandText = strSQL;
+		foreach (SqlParameter xPar in SQLPar)
+            SQLCommandWithPar.Parameters.AddWithValue(xPar.ParameterName, xPar.Value);
+
+        try
+        {
+            _MSG = "";
+            SQLCommandWithPar.ExecuteNonQuery();
+        }
+        catch (Exception e)
+        {
+            _MSG = e.Message;
+        }    
+    }
 
     public SqlDataReader OpenReaderWithParam(string strSQL, ArrayList SQLPar)
     {
         SqlDataReader rd;
-        
-        if (DBCon.State == ConnectionState.Closed)
-            OpenConection();
+
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
 
         SqlCommand SQLCommandWithPar = new SqlCommand();
 
@@ -142,8 +179,10 @@ public sealed class Conexao
 
 	public DataSet OpenDataSetWithParam(string strSQL, string strTabela, ArrayList SQLPar)
     {
-        if (DBCon.State == ConnectionState.Closed)
-            OpenConection();
+        if (DBCon.State == ConnectionState.Open)
+            CloseConection();
+
+        OpenConection();
 
         SqlCommand SQLCommandWithPar = new SqlCommand();
 

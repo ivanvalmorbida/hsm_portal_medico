@@ -88,6 +88,11 @@
 
         agendar(item) {
             console.dir(item.Sala)
+            this.$http.post("agenda.asmx/Agendar", { sala: item.Sala, medico: 27, paciente: 1, tempo: this.tempo, horai: item.HoraIni }).then((res) => {
+                console.dir(res.data.d)
+                //this.agendas = JSON.parse(res.data.d)
+            })
+
             /*const index = this.procedimentos.indexOf(item)
             confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
             this.totalItem()*/

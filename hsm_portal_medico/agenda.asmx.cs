@@ -52,8 +52,9 @@ namespace hsm_portal_medico
 			strSQL.Append("iif(MAX(HORA) >= 1000, left(cast(MAX(HORA) as VARCHAR(4)), 2) + ':' + RIGHT(cast(MAX(HORA) as VARCHAR(4)), 2),").AppendLine();
 			strSQL.Append("left(cast(MAX(HORA) as VARCHAR(4)), 1) + ':' + RIGHT(cast(MAX(HORA) as VARCHAR(4)), 2)) as DATETIME) as HoraFim").AppendLine();
 			strSQL.Append("FROM AGENDA_HOSPITAL").AppendLine(); 
-			strSQL.Append("WHERE Isnull(MEDICOEXE,0) in(0, @Med) AND MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I' and TipoAnestesia=@Anestesia)").AppendLine();
-			strSQL.Append("AND STATUS In('', (SELECT VALOR FROM PARAMETROS_SOFTWARE Where PARAMETRO='glb_str_STATUS_RESERVADO'))").AppendLine();
+			strSQL.Append("WHERE MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I' and TipoAnestesia=@Anestesia)").AppendLine();
+            strSQL.Append("AND ((MEDICOEXE=@Med and STATUS=(SELECT VALOR FROM PARAMETROS_SOFTWARE Where PARAMETRO='glb_str_STATUS_RESERVADO') and NOMEPACI='HORARIO RESERVADO')").AppendLine();
+            strSQL.Append("OR (Isnull(MEDICOEXE, 0)=0 and Isnull(STATUS, '')='' and Isnull(NOMEPACI, '')=''))").AppendLine();
             strSQL.Append("AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5,").AppendLine(); 
             strSQL.Append("iif(datepart(dw, getdate())=1, 4, 3)), getdate()) as DATE)").AppendLine();
 			strSQL.Append("GROUP BY Medico, DATA_CONSULTA, Isnull(MEDICOEXE,0)) as d where datediff (minute, HoraIni, HoraFim)>=@tempo").AppendLine();
@@ -65,12 +66,12 @@ namespace hsm_portal_medico
         }
         
 		[WebMethod]
-		public string Agendar(int sala, int medico, int paciente, int tempo, string horario)
+		public string Agendar(int sala, int medico, int paciente, int tempo, DateTime horai)
         {
             Conexao cn = new Conexao();
             SqlParameter sqlPar = new SqlParameter();
             ArrayList colPar = new ArrayList();
-            StringBuilder strSQL = new StringBuilder()
+            StringBuilder strSQL = new StringBuilder();
    
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
@@ -78,7 +79,8 @@ namespace hsm_portal_medico
             sqlPar.ParameterName = "@sala";
             colPar.Add(sqlPar);
 
-			sqlPar.DbType = DbType.Int32;
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Int32;
             sqlPar.Value = medico;
             sqlPar.ParameterName = "@medico";
             colPar.Add(sqlPar);
@@ -89,10 +91,38 @@ namespace hsm_portal_medico
 			sqlPar.ParameterName = "@paciente";
             colPar.Add(sqlPar);
 
-			strSQL.Append("UPDATE AGENDA_HOSPITAL set medicoexe=@medico, paciente=@paciente, status=''").AppendLine(); 
-			strSQL.Append("where DATA_CONSULTA=@data and medico=@sala and hora>=@horai and hora<=@horaf").AppendLine();
+            DateTime data = DateTime.Now;
 
-			//return cn.ExecuteWithParam(strSQL.ToString(), colPar);
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Date;
+            sqlPar.Value = horai.Date;
+            sqlPar.ParameterName = "@data";
+            colPar.Add(sqlPar);
+
+            string hora = horai.Hour.ToString() + horai.Minute.ToString("00");
+
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = hora;
+            sqlPar.ParameterName = "@horai";
+            colPar.Add(sqlPar);
+
+            horai = horai.AddMinutes(tempo);
+            hora = horai.Hour.ToString() + horai.Minute.ToString("00");
+
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = hora;
+            sqlPar.ParameterName = "@horaf";
+            colPar.Add(sqlPar);
+
+
+            strSQL.Append("UPDATE AGENDA_HOSPITAL set medicoexe=@medico, paciente=@paciente").AppendLine(); 
+			strSQL.Append("where DATA_CONSULTA=@data and medico=@sala and hora>=@horai and hora<@horaf").AppendLine();
+
+			cn.ExecuteWithParamOld(strSQL.ToString(), colPar);
+
+            return "Ok";
         }
 
 		[WebMethod]
