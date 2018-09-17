@@ -16,8 +16,8 @@
             procedimentos: [],
 
             headers_agenda: [
-                { text: 'Data hora inicio', align: 'left', value: 'DataIni' },
-                { text: 'Selecionar', value: 'procedimento', sortable: false }
+                { text: 'Data hora inicio', align: 'left', value: 'HoraIniF', sortable: false },
+                { text: 'Selecionar', value: 'item', sortable: false }
             ],
             agendas: [],
 
@@ -84,6 +84,13 @@
             })
             this.procedimento = null
             this.totalItem()
+        },
+
+        agendar(item) {
+            console.dir(item.Sala)
+            /*const index = this.procedimentos.indexOf(item)
+            confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
+            this.totalItem()*/
         },
 
         formatDate(date) {

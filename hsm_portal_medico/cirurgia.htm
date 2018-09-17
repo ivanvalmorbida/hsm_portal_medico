@@ -76,9 +76,9 @@
                 </v-layout>   
                 <v-data-table :headers="headers_agenda" :items="agendas" hide-actions>
                     <template slot="items" slot-scope="props">
-                        <td>{{ props.item.HoraIni }}</td>
+                        <td>{{ props.item.HoraIniF }}</td>
                         <td>
-                            <v-btn icon class="mx-0" @click="delItem(props.item)">
+                            <v-btn icon class="mx-0" @click="agendar(props.item)">
                                 <v-icon>check_circle</v-icon>
                             </v-btn>
                         </td>
