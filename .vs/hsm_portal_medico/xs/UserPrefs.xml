@@ -1,21 +1,18 @@
 ﻿<Properties StartupConfiguration="{5D8877DD-0485-4DDE-82BD-87D50737A4D3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="hsm_portal_medico/agenda.asmx.cs">
-    <Files>
-      <File FileName="hsm_portal_medico/Web.config" Line="16" Column="7" />
-      <File FileName="hsm_portal_medico/agenda.asmx.cs" Line="95" Column="6" />
-      <File FileName="hsm_portal_medico/Default.aspx.cs" Line="16" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>strSQL.ToString()</Value>
+          <Value>obj</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/ivan/hsm_portal_medico/hsm_portal_medico/agenda.asmx.cs" relfile="hsm_portal_medico/agenda.asmx.cs" line="201" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.hsm__portal__medico PreferredExecutionTarget="chromium-browser" />

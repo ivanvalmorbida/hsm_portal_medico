@@ -66,7 +66,7 @@ namespace hsm_portal_medico
         }
         
 		[WebMethod]
-		public string Agendar(int sala, int medico, int paciente, int tempo, DateTime horai)
+		public string Agendar(objAgendar obj)//int sala, int medico, int paciente, int tempo, DateTime horai)
         {
             Conexao cn = new Conexao();
             SqlParameter sqlPar = new SqlParameter();
@@ -75,19 +75,19 @@ namespace hsm_portal_medico
    
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = sala;
+            sqlPar.Value = obj.sala;
             sqlPar.ParameterName = "@sala";
             colPar.Add(sqlPar);
 
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = medico;
+            sqlPar.Value = obj.medico;
             sqlPar.ParameterName = "@medico";
             colPar.Add(sqlPar);
 
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = paciente;
+            sqlPar.Value = obj.paciente;
 			sqlPar.ParameterName = "@paciente";
             colPar.Add(sqlPar);
 
@@ -95,11 +95,11 @@ namespace hsm_portal_medico
 
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Date;
-            sqlPar.Value = horai.Date;
+            sqlPar.Value = obj.horaini.Date;
             sqlPar.ParameterName = "@data";
             colPar.Add(sqlPar);
 
-            string hora = horai.Hour.ToString() + horai.Minute.ToString("00");
+            string hora = obj.horaini.Hour.ToString() + obj.horaini.Minute.ToString("00");
 
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
@@ -107,23 +107,113 @@ namespace hsm_portal_medico
             sqlPar.ParameterName = "@horai";
             colPar.Add(sqlPar);
 
-            horai = horai.AddMinutes(tempo);
-            hora = horai.Hour.ToString() + horai.Minute.ToString("00");
+            obj.horaini = obj.horaini.AddMinutes(obj.tempo);
+            hora = obj.horaini.Hour.ToString() + obj.horaini.Minute.ToString("00");
 
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
             sqlPar.Value = hora;
             sqlPar.ParameterName = "@horaf";
             colPar.Add(sqlPar);
+            
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.guia;
+            sqlPar.ParameterName = "@guia";
+            colPar.Add(sqlPar);
 
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.String;
+            sqlPar.Value = obj.autorizacao;
+            sqlPar.ParameterName = "@autorizacao";
+            colPar.Add(sqlPar);
 
-            strSQL.Append("UPDATE AGENDA_HOSPITAL set medicoexe=@medico, paciente=@paciente").AppendLine(); 
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Date;
+            sqlPar.Value = obj.data_autoriza.Date;
+            sqlPar.ParameterName = "@data_autoriza";
+            colPar.Add(sqlPar);
+
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Date;
+            sqlPar.Value = obj.valid_autoriza.Date;
+			sqlPar.ParameterName = "@valid_autoriza";
+            colPar.Add(sqlPar);
+            
+            strSQL.Append("UPDATE AGENDA_HOSPITAL set medicoexe=@medico, paciente=@paciente,").AppendLine(); 
+            strSQL.Append("NOMEPACI=(select nome from paciente where codigo=@paciente),").AppendLine();
+            strSQL.Append("REQUISICAO=@guia, AUTORIZACAO=@autorizacao, DATA_AUTORIZACAO=@data_autoriza,").AppendLine();
+            strSQL.Append("DATA_VALIDADE_AUTORIZACAO=@valid_autoriza").AppendLine();
+
+            if(obj.procedimentos.Count>0){
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.String;
+				sqlPar.Value = obj.procedimentos[0].ToString();
+                sqlPar.ParameterName = "@EXAME1";
+                colPar.Add(sqlPar);
+
+                strSQL.Append(",EXAME1=@EXAME1").AppendLine();
+            }
+			if (obj.procedimentos.Count > 1)
+            {
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.String;
+                sqlPar.Value = obj.procedimentos[1].ToString();
+                sqlPar.ParameterName = "@EXAME2";
+                colPar.Add(sqlPar);
+
+                strSQL.Append(",EXAME2=@EXAME2").AppendLine();
+            }
+			if (obj.procedimentos.Count > 2)
+            {
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.String;
+                sqlPar.Value = obj.procedimentos[2].ToString();
+                sqlPar.ParameterName = "@EXAME3";
+                colPar.Add(sqlPar);
+
+                strSQL.Append(",EXAME3=@EXAME3").AppendLine();
+            }            
+			if (obj.procedimentos.Count > 3)
+            {
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.String;
+                sqlPar.Value = obj.procedimentos[3].ToString();
+                sqlPar.ParameterName = "@EXAME4";
+                colPar.Add(sqlPar);
+
+                strSQL.Append(",EXAME4=@EXAME4").AppendLine();
+            }            
+			if (obj.procedimentos.Count > 4)
+            {
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.String;
+                sqlPar.Value = obj.procedimentos[4].ToString();
+                sqlPar.ParameterName = "@EXAME5";
+                colPar.Add(sqlPar);
+
+                strSQL.Append(",EXAME5=@EXAME5").AppendLine();
+            }            
+
 			strSQL.Append("where DATA_CONSULTA=@data and medico=@sala and hora>=@horai and hora<@horaf").AppendLine();
-
 			cn.ExecuteWithParamOld(strSQL.ToString(), colPar);
-
+            
             return "Ok";
         }
+
+		public class objAgendar
+		{
+			public int sala { get; set; }
+			public int medico { get; set; }
+			public int paciente { get; set; }
+			public int tempo { get; set; }
+			public DateTime horaini { get; set; }
+			public string guia { get; set; }
+			public string autorizacao { get; set; }
+            public DateTime data_autoriza { get; set; }
+			public DateTime valid_autoriza { get; set; }
+            public ArrayList procedimentos { get; set; }
+		}
 
 		[WebMethod]
         public string SaveFile(FileData data)
@@ -154,7 +244,3 @@ namespace hsm_portal_medico
         }
     }
 }
-
-
-//UPDATE AGENDA_HOSPITAL set medicoexe=27, status='RES' 
-//where DATA_CONSULTA > getdate() + 5 and datepart(dw, DATA_CONSULTA)= 3

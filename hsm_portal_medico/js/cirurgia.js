@@ -87,8 +87,26 @@
         },
 
         agendar(item) {
-            console.dir(item.Sala)
-            this.$http.post("agenda.asmx/Agendar", { sala: item.Sala, medico: 27, paciente: 1, tempo: this.tempo, horai: item.HoraIni }).then((res) => {
+            var procedimentos = []
+            var objAgendar = new Object()
+            
+            this.procedimentos.forEach(p => {
+                procedimentos.push(p.procedimento)
+            })
+
+            objAgendar["sala"] = item.Sala
+            objAgendar["medico"] = 27
+            objAgendar["paciente"] = 1
+            objAgendar["tempo"] = this.tempo
+            objAgendar["horaini"] = item.HoraIni
+            objAgendar["guia"] = this.guia
+			objAgendar["autorizacao"] = this.autorizacao
+            objAgendar["data_autoriza"] = this.data_autoriza
+			objAgendar["valid_autoriza"] = this.valid_autoriza
+            objAgendar["procedimentos"] = procedimentos
+
+            console.dir(objAgendar)
+            this.$http.post("agenda.asmx/Agendar", {obj: objAgendar}).then((res) => {
                 console.dir(res.data.d)
                 //this.agendas = JSON.parse(res.data.d)
             })

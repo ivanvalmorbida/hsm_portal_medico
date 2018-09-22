@@ -55,7 +55,8 @@
     methods: {
 
         gravar() {
-            var objPaciente = new Object();
+            var objPaciente = new Object()
+            
             objPaciente["codigo"] = this.codigo
             objPaciente["cpf"] = this.cpf
             objPaciente["nome"] = this.nome

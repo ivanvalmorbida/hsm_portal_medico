@@ -6,21 +6,20 @@
 /home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.dll
 /home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.pdb
 /home/ivan/Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.csprojResolveAssemblyReference.cache
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/bin/hsm_portal_medico.dll.config
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/bin/hsm_portal_medico.dll
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/bin/hsm_portal_medico.pdb
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/bin/Newtonsoft.Json.dll
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/bin/Newtonsoft.Json.xml
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.csprojAssemblyReference.cache
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.csproj.CoreCompileInputs.cache
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.csproj.CopyComplete
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.dll
+C:/Local Projects/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.pdb
 /home/ivan/hsm_portal_medico/hsm_portal_medico/bin/hsm_portal_medico.dll
 /home/ivan/hsm_portal_medico/hsm_portal_medico/bin/hsm_portal_medico.pdb
 /home/ivan/hsm_portal_medico/hsm_portal_medico/bin/Newtonsoft.Json.dll
 /home/ivan/hsm_portal_medico/hsm_portal_medico/bin/Newtonsoft.Json.xml
-/home/ivan/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.csprojResolveAssemblyReference.cache
 /home/ivan/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.csproj.CoreCompileInputs.cache
 /home/ivan/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.dll
 /home/ivan/hsm_portal_medico/hsm_portal_medico/obj/Debug/hsm_portal_medico.pdb
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\bin\hsm_portal_medico.dll.config
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\bin\hsm_portal_medico.dll
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\bin\hsm_portal_medico.pdb
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\bin\Newtonsoft.Json.dll
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\bin\Newtonsoft.Json.xml
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.csprojAssemblyReference.cache
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.csproj.CoreCompileInputs.cache
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.csproj.CopyComplete
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.dll
-C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.pdb
