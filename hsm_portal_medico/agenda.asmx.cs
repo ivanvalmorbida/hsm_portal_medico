@@ -142,6 +142,7 @@ namespace hsm_portal_medico
             
             strSQL.Append("UPDATE AGENDA_HOSPITAL set medicoexe=@medico, paciente=@paciente,").AppendLine(); 
             strSQL.Append("NOMEPACI=(select nome from paciente where codigo=@paciente),").AppendLine();
+            strSQL.Append("Convenio=(select convenio from paciente where codigo=@paciente),").AppendLine();
             strSQL.Append("REQUISICAO=@guia, AUTORIZACAO=@autorizacao, DATA_AUTORIZACAO=@data_autoriza,").AppendLine();
             strSQL.Append("DATA_VALIDADE_AUTORIZACAO=@valid_autoriza").AppendLine();
 
