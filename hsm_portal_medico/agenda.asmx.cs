@@ -29,8 +29,16 @@ namespace hsm_portal_medico
             sqlPar.ParameterName = "@Med";
             colPar.Add(sqlPar);
 
-			strSQL.Append("SELECT DATA_CONSULTA, HORA, NOMEPACI, EXAME1, e.NOME as EXAME1NOME FROM AGENDA_HOSPITAL as a").AppendLine();
-			strSQL.Append("INNER JOIN EXAME as e on e.CODIGO=a.EXAME1").AppendLine();
+			strSQL.Append("SELECT").AppendLine(); 
+            strSQL.Append("CONVERT(varchar,HoraIni,103)+' '+CONVERT(varchar,HoraIni,108) as data_hora,").AppendLine();
+            strSQL.Append("NOMEPACI as paciente, e1.NOME as procedimento1, e2.NOME as procedimento2,").AppendLine();
+            strSQL.Append("e3.NOME as procedimento3, e4.NOME as procedimento4, e5.NOME as procedimento5").AppendLine();
+            strSQL.Append("FROM AGENDA_HOSPITAL as a").AppendLine();
+            strSQL.Append("INNER JOIN EXAME as e1 on e1.CODIGO=a.EXAME1").AppendLine();
+            strSQL.Append("LEFT JOIN EXAME as e2 on e2.CODIGO=a.EXAME2").AppendLine();
+            strSQL.Append("LEFT JOIN EXAME as e3 on e3.CODIGO=a.EXAME3").AppendLine();
+            strSQL.Append("LEFT JOIN EXAME as e4 on e4.CODIGO=a.EXAME4").AppendLine();
+            strSQL.Append("LEFT JOIN EXAME as e5 on e5.CODIGO=a.EXAME5").AppendLine();
 			strSQL.Append("WHERE a.MEDICOEXE=@Med AND a.DATA_CONSULTA>=getdate() AND isnull(a.EXAME1,'')<>''").AppendLine(); 
          
 			tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Agenda", colPar).Tables[0];
