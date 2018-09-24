@@ -1,10 +1,9 @@
-﻿<%@ Page Language="C#" Inherits="hsm_portal_medico.Default" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Agendamentos - HSM Portal Medico</title>
+    <title>Cirurgia - HSM Portal Medico</title>
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'>
     <link rel='stylesheet prefetch' href='https://unpkg.com/vuetify@1.0.19/dist/vuetify.min.css'>
 </head>
@@ -13,33 +12,25 @@
     <div id="app" style="padding: 0px 20px 0px 20px">
         <v-app id="inspire">
             <v-container fluid grid-list-md>
-				<p></p>
-				<h1 class="display-1">HSM Portal Medico - Agendamento de Cirurgias</h1>
-				<p></p>
-				<p>
-					Usuario: Fulano de Tal
-				</p>							
-                <v-layout row wrap>
-                    <v-flex d-flex>
-                        <v-card color="indigo" dark>
-                            <v-btn color="success" @click="Agendar()">Fazer novo agendamento</v-btn>
-                        </v-card>
-                    </v-flex>                  
-				</v-layout>
-				<p></p>
-				<h1 class="display-1">Cirurgias Agendadas:</h1>
-				<v-data-table :headers="headers" :items="agendas" hide-actions>
-                    <template slot="items" slot-scope="age">
-						<td>{{ age.item.data_hora }}</td>
-						<td>{{ age.item.descricao }}</td>
-						<td>{{ age.item.procedimento1 }}</td>
+                <v-data-table :headers="headers" :items="procedimentos" hide-actions>
+                    <template slot="items" slot-scope="props">
+                        <td>{{ props.item.procedimento }}</td>
+                        <td>{{ props.item.descricao }}</td>
+                        <td>{{ props.item.tempo }}</td>
                         <td>
-                            <v-btn icon class="mx-0" @click="detalhes(age.item)">
+                            <v-btn icon class="mx-0" @click="delItem(props.item)">
                                 <v-icon color="pink">detalhes</v-icon>
                             </v-btn>
                         </td>
                     </template>
-                </v-data-table>                       
+                </v-data-table>
+                <v-layout row wrap>
+                    <v-flex d-flex>
+                        <v-card color="indigo" dark>
+                            <v-btn color="success" @click="getAgendas()">Fazer novo agendamento</v-btn>
+                        </v-card>
+                    </v-flex>                  
+                </v-layout>                             
             </v-container>
         </v-app>
     </div>

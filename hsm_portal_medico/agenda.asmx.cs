@@ -16,6 +16,29 @@ namespace hsm_portal_medico
 	public class agenda : System.Web.Services.WebService
     {
 		[WebMethod]
+        public string getAgendamentos(int medico)
+        {
+            Conexao cn = new Conexao();
+			SqlParameter sqlPar = new SqlParameter();
+            ArrayList colPar = new ArrayList();
+            StringBuilder strSQL = new StringBuilder();
+            DataTable tb;
+
+			sqlPar.DbType = DbType.Int32;
+			sqlPar.Value = medico;
+            sqlPar.ParameterName = "@Med";
+            colPar.Add(sqlPar);
+
+			strSQL.Append("SELECT DATA_CONSULTA, HORA, NOMEPACI, EXAME1, e.NOME as EXAME1NOME FROM AGENDA_HOSPITAL as a").AppendLine();
+			strSQL.Append("INNER JOIN EXAME as e on e.CODIGO=a.EXAME1").AppendLine();
+			strSQL.Append("WHERE a.MEDICOEXE=@Med AND a.DATA_CONSULTA>=getdate() AND isnull(a.EXAME1,'')<>''").AppendLine(); 
+         
+			tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Agenda", colPar).Tables[0];
+
+            return JsonConvert.SerializeObject(tb, Formatting.None);
+        }
+
+		[WebMethod]
         public string getAgendas(int medico, int anestesia, int tempo)
         {
             Conexao cn = new Conexao();

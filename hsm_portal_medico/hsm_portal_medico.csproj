@@ -51,7 +51,6 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
-    <Content Include="Default.aspx" />
     <Content Include="js\cirurgia.js" />
     <Content Include="js\paciente.js" />
     <Content Include="cirurgia.asmx" />
@@ -69,23 +68,24 @@
       <DependentUpon>agenda.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Content Include="agenda.htm" />
     <Content Include="medico.asmx" />
     <Compile Include="medico.asmx.cs">
       <DependentUpon>medico.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="index.html" />
+    <Content Include="js\index.js" />
+    <Content Include="Default.aspx" />
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="conexao.cs" />
     <Compile Include="login.aspx.cs">
