@@ -16,9 +16,6 @@ var vm = new Vue({
     },
 
     methods: {
-        Agendar() {
-
-        },
 
         getAgendas() {
             /*
@@ -37,5 +34,12 @@ var vm = new Vue({
             confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
             this.totalItem()*/
         }
+    },
+
+    created() {
+        this.$http.post("agenda.asmx/getAgendamentos").then((res) => {
+            console.dir(res.data.d)
+            this.agendas = JSON.parse(res.data.d)
+        })
     }
 });

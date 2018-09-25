@@ -68,12 +68,6 @@
       <DependentUpon>agenda.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Content Include="medico.asmx" />
-    <Compile Include="medico.asmx.cs">
-      <DependentUpon>medico.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Content Include="index.html" />
     <Content Include="js\index.js" />
     <Content Include="Default.aspx" />
     <Compile Include="Default.aspx.designer.cs">

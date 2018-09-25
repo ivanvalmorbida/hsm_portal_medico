@@ -54,6 +54,10 @@
 
     methods: {
 
+        gravarx() {
+            location.href = 'cirurgia.htm'
+        },
+
         gravar() {
             var objPaciente = new Object()
             
@@ -80,8 +84,7 @@
             
             this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
             .then((res) => {
-                //
-                //
+                location.href = 'cirurgia.htm?p='+res.data.d
             })
         },
         BuscarCPF() {

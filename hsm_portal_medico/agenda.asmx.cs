@@ -16,7 +16,7 @@ namespace hsm_portal_medico
 	public class agenda : System.Web.Services.WebService
     {
 		[WebMethod]
-        public string getAgendamentos(int medico)
+        public string getAgendamentos()
         {
             Conexao cn = new Conexao();
 			SqlParameter sqlPar = new SqlParameter();
@@ -25,12 +25,15 @@ namespace hsm_portal_medico
             DataTable tb;
 
 			sqlPar.DbType = DbType.Int32;
-			sqlPar.Value = medico;
+			sqlPar.Value = System.Web.HttpContext.Current.User.Identity.Name.ToString();
             sqlPar.ParameterName = "@Med";
             colPar.Add(sqlPar);
 
-			strSQL.Append("SELECT").AppendLine(); 
-            strSQL.Append("CONVERT(varchar,HoraIni,103)+' '+CONVERT(varchar,HoraIni,108) as data_hora,").AppendLine();
+			strSQL.Append("SELECT *, CONVERT(varchar,HoraIni,103)+' '+CONVERT(varchar,HoraIni,108) as data_hora").AppendLine(); 
+			strSQL.Append("from(SELECT cast(cast(YEAR(data_consulta) as VARCHAR(4)) + RIGHT('0' + cast(month(data_consulta) as VARCHAR(2)), 2) +").AppendLine(); 
+			strSQL.Append("RIGHT('0' + cast(day(data_consulta) as VARCHAR(2)), 2) + ' ' +").AppendLine(); 
+			strSQL.Append("iif(HORA >= 1000, left(cast(HORA as VARCHAR(4)), 2) + ':' + RIGHT(cast(HORA as VARCHAR(4)), 2),").AppendLine(); 
+			strSQL.Append("left(cast(HORA as VARCHAR(4)), 1) + ':' + RIGHT(cast(HORA as VARCHAR(4)), 2)) as DATETIME) as HoraIni,").AppendLine(); 
             strSQL.Append("NOMEPACI as paciente, e1.NOME as procedimento1, e2.NOME as procedimento2,").AppendLine();
             strSQL.Append("e3.NOME as procedimento3, e4.NOME as procedimento4, e5.NOME as procedimento5").AppendLine();
             strSQL.Append("FROM AGENDA_HOSPITAL as a").AppendLine();
@@ -39,7 +42,7 @@ namespace hsm_portal_medico
             strSQL.Append("LEFT JOIN EXAME as e3 on e3.CODIGO=a.EXAME3").AppendLine();
             strSQL.Append("LEFT JOIN EXAME as e4 on e4.CODIGO=a.EXAME4").AppendLine();
             strSQL.Append("LEFT JOIN EXAME as e5 on e5.CODIGO=a.EXAME5").AppendLine();
-			strSQL.Append("WHERE a.MEDICOEXE=@Med AND a.DATA_CONSULTA>=getdate() AND isnull(a.EXAME1,'')<>''").AppendLine(); 
+			strSQL.Append("WHERE a.MEDICOEXE=@Med AND a.DATA_CONSULTA>=getdate() AND isnull(a.EXAME1,'')<>'') as d").AppendLine(); 
          
 			tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Agenda", colPar).Tables[0];
 
@@ -47,7 +50,7 @@ namespace hsm_portal_medico
         }
 
 		[WebMethod]
-        public string getAgendas(int medico, int anestesia, int tempo)
+        public string getAgendas(int anestesia, int tempo)
         {
             Conexao cn = new Conexao();
 			SqlParameter sqlPar = new SqlParameter();
@@ -56,7 +59,7 @@ namespace hsm_portal_medico
             DataTable tb;
 
 			sqlPar.DbType = DbType.Int32;
-			sqlPar.Value = medico;
+			sqlPar.Value = System.Web.HttpContext.Current.User.Identity.Name.ToString();
             sqlPar.ParameterName = "@Med";
             colPar.Add(sqlPar);
 
@@ -112,7 +115,7 @@ namespace hsm_portal_medico
 
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
-            sqlPar.Value = obj.medico;
+            sqlPar.Value = System.Web.HttpContext.Current.User.Identity.Name.ToString();
             sqlPar.ParameterName = "@medico";
             colPar.Add(sqlPar);
 
@@ -236,7 +239,6 @@ namespace hsm_portal_medico
 		public class objAgendar
 		{
 			public int sala { get; set; }
-			public int medico { get; set; }
 			public int paciente { get; set; }
 			public int tempo { get; set; }
 			public DateTime horaini { get; set; }

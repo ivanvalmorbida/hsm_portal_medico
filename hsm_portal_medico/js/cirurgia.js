@@ -2,7 +2,7 @@
     el: '#app',
     data: function data() {
         return {
-            guia: null, autorizacao: null, data_autoriza: null,
+            guia: null, autorizacao: null, data_autoriza: null, paci: null,
             data_autoriza_Formatted: null, menu_data_autoriza: false,
             valid_autoriza: null, valid_autoriza_Formatted: null,
             menu_valid_autoriza: false, tempo: null, anestesia: null, procedimento: [],
@@ -43,12 +43,9 @@
 
     methods: {
         getAgendas() {
-            this.$http.post("medico.asmx/getMedico").then((res) => {
-                //this.$http.post("agenda.asmx/getAgendas", { medico: 1, anestesia: 0, tempo: 0 }).then((res) => {
-                this.$http.post("agenda.asmx/getAgendas", { medico: res.data.d, anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
-                    //console.dir(res.data.d)
-                    this.agendas = JSON.parse(res.data.d)
-                })
+            this.$http.post("agenda.asmx/getAgendas", { anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
+                //console.dir(res.data.d)
+                this.agendas = JSON.parse(res.data.d)
             })
         },
 
@@ -95,8 +92,7 @@
             })
 
             objAgendar["sala"] = item.Sala
-            objAgendar["medico"] = 27
-            objAgendar["paciente"] = 1
+            objAgendar["paciente"] = this.paci
             objAgendar["tempo"] = this.tempo
             objAgendar["horaini"] = item.HoraIni
             objAgendar["guia"] = this.guia
@@ -108,12 +104,9 @@
             console.dir(objAgendar)
             this.$http.post("agenda.asmx/Agendar", {obj: objAgendar}).then((res) => {
                 console.dir(res.data.d)
+                location.href = 'Default.aspx'
                 //this.agendas = JSON.parse(res.data.d)
             })
-
-            /*const index = this.procedimentos.indexOf(item)
-            confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
-            this.totalItem()*/
         },
 
         formatDate(date) {
@@ -122,6 +115,14 @@
             const [year, month, day] = date.split('-')
             return `${day}/${month}/${year}`
         }
+    },
+
+    created() {
+        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
+        while(match = regex.exec(url)) {
+          params[match[1]] = match[2]
+        }
+        this.paci = params.p    
     }
 });
 

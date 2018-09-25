@@ -44,8 +44,16 @@ namespace hsm_portal_medico
 					"foneresid=@telefone, email=@email where codigo=@codigo";
 			}
 			cn.ExecuteWithParam(strSQL, colPar);
-
-			return "Ok";
+			
+			if (obj.codigo == 0)
+			{
+				strSQL = "select max(codigo) from PACIENTE";
+				SqlDataReader x = cn.OpenReader(strSQL);
+				if (x.Read()) { return x[0].ToString(); } else { return "0"; }
+			}
+			else{
+				return obj.codigo.ToString();
+			}
 		}
          
 		[WebMethod]

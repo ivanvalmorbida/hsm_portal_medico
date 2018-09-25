@@ -22,7 +22,7 @@
                 <v-layout row wrap>
                     <v-flex d-flex>
                         <v-card color="indigo" dark>
-                            <v-btn color="success" @click="Agendar()">Fazer novo agendamento</v-btn>
+                            <v-btn color="success" onclick="location.href = 'paciente.htm'">Fazer novo agendamento</v-btn>
                         </v-card>
                     </v-flex>                  
 				</v-layout>
