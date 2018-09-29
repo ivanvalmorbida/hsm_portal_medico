@@ -44,7 +44,6 @@
     methods: {
         getAgendas() {
             this.$http.post("agenda.asmx/getAgendas", { anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
-                //console.dir(res.data.d)
                 this.agendas = JSON.parse(res.data.d)
             })
         },
@@ -64,7 +63,6 @@
         totalItem() {
             this.tempo = 0
             this.procedimentos.forEach(p => {
-                console.dir(p.tempo)
                 this.tempo += p.tempo
             });
         },
@@ -101,11 +99,8 @@
 			objAgendar["valid_autoriza"] = this.valid_autoriza
             objAgendar["procedimentos"] = procedimentos
 
-            console.dir(objAgendar)
             this.$http.post("agenda.asmx/Agendar", {obj: objAgendar}).then((res) => {
-                console.dir(res.data.d)
                 location.href = 'Default.aspx'
-                //this.agendas = JSON.parse(res.data.d)
             })
         },
 

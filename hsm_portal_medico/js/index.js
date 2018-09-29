@@ -9,26 +9,15 @@ var vm = new Vue({
                 { text: 'Detalhes', value: 'item', sortable: false }
             ],
             agendas: [],
-
             loading: false,
             items: [],
+            dialog: false,
         };
     },
 
     methods: {
-
-        getAgendas() {
-            /*
-            this.$http.post("medico.asmx/getMedico").then((res) => {
-                //this.$http.post("agenda.asmx/getAgendas", { medico: 1, anestesia: 0, tempo: 0 }).then((res) => {
-                this.$http.post("agenda.asmx/getAgendas", { medico: res.data.d, anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
-                    //console.dir(res.data.d)
-                    this.agendas = JSON.parse(res.data.d)
-                })
-            })*/
-        },
-
         detalhes(item) {
+            this.dialog = true           
             /*
             const index = this.procedimentos.indexOf(item)
             confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
@@ -38,7 +27,6 @@ var vm = new Vue({
 
     created() {
         this.$http.post("agenda.asmx/getAgendamentos").then((res) => {
-            console.dir(res.data.d)
             this.agendas = JSON.parse(res.data.d)
         })
     }
