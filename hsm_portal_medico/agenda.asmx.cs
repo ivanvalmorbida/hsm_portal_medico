@@ -16,6 +16,28 @@ namespace hsm_portal_medico
 	public class agenda : System.Web.Services.WebService
     {
 		[WebMethod]
+        public string getUsuarioDados()
+        {
+            Conexao cn = new Conexao();
+			SqlParameter sqlPar = new SqlParameter();
+            ArrayList colPar = new ArrayList();
+            StringBuilder strSQL = new StringBuilder();
+            DataTable tb;
+
+			sqlPar.DbType = DbType.Int32;
+			sqlPar.Value = System.Web.HttpContext.Current.User.Identity.Name.ToString();
+            sqlPar.ParameterName = "@Med";
+            colPar.Add(sqlPar);
+
+			strSQL.Append("SELECT nome, crm, ufcrm from MEDICO").AppendLine(); 
+			strSQL.Append("WHERE codigo=@Med").AppendLine(); 
+         
+			tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Medico", colPar).Tables[0];
+
+            return JsonConvert.SerializeObject(tb, Formatting.None);
+        }
+
+		[WebMethod]
         public string getAgendamentos()
         {
             Conexao cn = new Conexao();

@@ -16,7 +16,7 @@
             titular: null, pai: null, mae: null, cep: null, cidade: null, uf: null,
             bairro_items: [], bairro: null, contato: null, celular: null, telefone: null,
             email: null, validade_cart: null, menu_validade_cart: false,
-            validade_cart_Formatted: null
+            validade_cart_Formatted: null, dialog: false
         };
     },
 
@@ -53,39 +53,39 @@
     },
 
     methods: {
-
-        gravarx() {
-            location.href = 'cirurgia.htm'
-        },
-
         gravar() {
-            var objPaciente = new Object()
-            
-            objPaciente["codigo"] = this.codigo
-            objPaciente["cpf"] = this.cpf
-            objPaciente["nome"] = this.nome
-            objPaciente["nascimento"] = this.nascimento
-            objPaciente["sexo"] = this.sexo
-            objPaciente["rg"] = this.rg
-            objPaciente["estadocivil"] = this.estadocivil
-            objPaciente["profissao"] = this.profissao
-            objPaciente["pai"] = this.pai
-            objPaciente["mae"] = this.mae
-            objPaciente["convenio"] = this.convenio
-            objPaciente["plano"] = this.plano
-            objPaciente["carteirinha"] = this.carteirinha
-            objPaciente["titular"] = this.titular
-            objPaciente["cep"] = this.cep
-            objPaciente["validade_cart"] = this.validade_cart
-            objPaciente["bairro"] = this.bairro
-            objPaciente["celular"] = this.celular
-            objPaciente["telefone"] = this.telefone
-            objPaciente["email"] = this.email
-            
-            this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
-            .then((res) => {
-                location.href = 'cirurgia.htm?p='+res.data.d
-            })
+            if (!$("#form-paciente").valid()){
+                this.dialog = true
+            }
+            else {
+                var objPaciente = new Object()
+                
+                objPaciente["codigo"] = this.codigo
+                objPaciente["cpf"] = this.cpf
+                objPaciente["nome"] = this.nome
+                objPaciente["nascimento"] = this.nascimento
+                objPaciente["sexo"] = this.sexo
+                objPaciente["rg"] = this.rg
+                objPaciente["estadocivil"] = this.estadocivil
+                objPaciente["profissao"] = this.profissao
+                objPaciente["pai"] = this.pai
+                objPaciente["mae"] = this.mae
+                objPaciente["convenio"] = this.convenio
+                objPaciente["plano"] = this.plano
+                objPaciente["carteirinha"] = this.carteirinha
+                objPaciente["titular"] = this.titular
+                objPaciente["cep"] = this.cep
+                objPaciente["validade_cart"] = this.validade_cart
+                objPaciente["bairro"] = this.bairro
+                objPaciente["celular"] = this.celular
+                objPaciente["telefone"] = this.telefone
+                objPaciente["email"] = this.email
+                
+                this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
+                .then((res) => {
+                    location.href = 'cirurgia.htm?p='+res.data.d
+                })
+            }
         },
         BuscarCPF() {
             if (this.cpf != undefined) { cpf = this.cpf.replace('.', '').replace('-', '') } else { cpf = '' }

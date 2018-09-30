@@ -12,6 +12,7 @@
     <div id="app" style="padding: 0px 20px 0px 20px">
         <v-app id="inspire">
             <v-container fluid grid-list-md>
+                <h1 class="display-1">Cirurgias:</h1>
                 <v-layout row wrap>
                     <v-flex d-flex xs12 sm6 md3>
                         <v-text-field v-model="guia" label="Nr.Guia" required></v-text-field>
@@ -71,6 +72,7 @@
                     <v-flex d-flex>
                         <v-card color="indigo" dark>
                             <v-btn color="success" @click="getAgendas()">Buscar agendas disponiveis</v-btn>
+                            <v-btn color="primary" onclick="location.href = 'Default.aspx'">Inicio</v-btn>
                         </v-card>
                     </v-flex>                  
                 </v-layout>   

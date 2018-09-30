@@ -12,22 +12,30 @@ var vm = new Vue({
             loading: false,
             items: [],
             dialog: false,
+            medico: [],
+            inicio: '',
+            paciente: '',
+            procedimento1: ''
         };
     },
 
     methods: {
         detalhes(item) {
-            this.dialog = true           
-            /*
-            const index = this.procedimentos.indexOf(item)
-            confirm('Confirma a exclusão deste item?') && this.procedimentos.splice(index, 1)
-            this.totalItem()*/
+            this.dialog = true
+            this.inicio = item.data_hora
+            this.paciente = item.paciente
+            this.procedimento1 = item.procedimento1
         }
     },
 
     created() {
         this.$http.post("agenda.asmx/getAgendamentos").then((res) => {
             this.agendas = JSON.parse(res.data.d)
+        }),
+
+        this.$http.post("agenda.asmx/getUsuarioDados").then((res) => {
+            var tmp = JSON.parse(res.data.d)
+            this.medico = tmp[0]
         })
     }
 });
