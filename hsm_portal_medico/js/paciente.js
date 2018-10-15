@@ -3,7 +3,7 @@
     data: function data() {
         return {
             rules: {
-                required: (value) => !!value || 'Required.',
+                required: (value) => !!value || 'Este campo é requerido!.',
                 email: (value) => {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || 'E-mail inválido.'
@@ -16,7 +16,7 @@
             titular: null, pai: null, mae: null, cep: null, cidade: null, uf: null,
             bairro_items: [], bairro: null, contato: null, celular: null, telefone: null,
             email: null, validade_cart: null, menu_validade_cart: false,
-            validade_cart_Formatted: null, dialog: false
+            validade_cart_Formatted: null, dialog: false, formHasErrors: false, valid: true,
         };
     },
 
@@ -54,10 +54,7 @@
 
     methods: {
         gravar() {
-            if (!$("#form-paciente").valid()){
-                this.dialog = true
-            }
-            else {
+            if (this.$refs.form.validate()) {
                 var objPaciente = new Object()
                 
                 objPaciente["codigo"] = this.codigo

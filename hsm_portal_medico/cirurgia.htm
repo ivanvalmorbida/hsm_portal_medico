@@ -41,9 +41,8 @@
                     </v-flex>
                     <v-flex d-flex xs12 sm9 md10>
                         <v-radio-group label="Tipo de Anestesia" v-model="anestesia" row>
-                            <v-radio label="Local sem anestesista" value="1"></v-radio>
-                            <v-radio label="Local com anestesista" value="2"></v-radio>
-                            <v-radio label="Geral" value="3"></v-radio>
+                            <v-radio label="Sem anestesista" value="2"></v-radio>
+                            <v-radio label="Com anestesista" value="1"></v-radio>
                         </v-radio-group>
                     </v-flex>
                 </v-layout>
@@ -71,7 +70,7 @@
                 <v-layout row wrap>
                     <v-flex d-flex>
                         <v-card color="indigo" dark>
-                            <v-btn color="success" @click="getAgendas()">Buscar agendas disponiveis</v-btn>
+                            <v-btn id="btn-buscar" color="success" onclick="this.setAttribute('disabled', true);" @click="getAgendas()">Buscar agendas disponiveis</v-btn>
                             <v-btn color="primary" onclick="location.href = 'Default.aspx'">Inicio</v-btn>
                         </v-card>
                     </v-flex>                  

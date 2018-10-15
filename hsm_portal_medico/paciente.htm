@@ -11,7 +11,7 @@
 <body>
     <div id="app" style="padding: 0px 20px 0px 20px">
         <v-app id="inspire">
-            <form id="form-paciente" name="formpaciente">
+            <v-form ref="form" v-model="valid" lazy-validation>
                 <v-container fluid grid-list-md>
                     <h1 class="display-1">Paciente</h1>
                     <v-layout row wrap>
@@ -25,10 +25,10 @@
 
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm3 md2>
-                            <v-text-field mask="###.###.###-##" v-model="cpf" label="CPF" required @change="BuscarCPF()"></v-text-field>
+                            <v-text-field mask="###.###.###-##" v-model="cpf" label="CPF" :rules="[rules.required]" required @change="BuscarCPF()"></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md8>
-                            <v-text-field v-model="nome" label="Nome" required></v-text-field>
+                            <v-text-field v-model="nome" label="Nome" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm3 md2>
                             <v-menu ref="menu_nascimento" v-model="menu_nascimento" :nudge-right="40"
@@ -48,7 +48,7 @@
                             </v-radio-group>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md2>
-                            <v-text-field v-model="rg" label="RG" required></v-text-field>
+                            <v-text-field v-model="rg" label="RG" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md3>
                             <v-select :items="estadocivil_items" v-model="estadocivil" label="Estado Civil"
@@ -60,10 +60,10 @@
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm6 md6>
-                            <v-text-field v-model="pai" label="Nome do Pai" required></v-text-field>
+                            <v-text-field v-model="pai" label="Nome do Pai" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md6>
-                            <v-text-field v-model="mae" label="Nome da Mãe" required></v-text-field>
+                            <v-text-field v-model="mae" label="Nome da Mãe" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
@@ -71,12 +71,12 @@
                             <v-select :items="convenio_items" v-model="convenio" label="Convênio" return-object></v-select>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md6>
-                            <v-text-field v-model="plano" label="Plano" required></v-text-field>
+                            <v-text-field v-model="plano" label="Plano" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm4 md4>
-                            <v-text-field v-model="carteirinha" label="Nº Carteirinha" required></v-text-field>
+                            <v-text-field v-model="carteirinha" label="Nº Carteirinha" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm4 md4>
                             <v-menu ref="menu_validade_cart" v-model="menu_validade_cart" :nudge-right="40"
@@ -88,18 +88,18 @@
                             </v-menu>
                         </v-flex>
                         <v-flex d-flex xs12 sm4 md4>
-                            <v-text-field v-model="titular" label="Titular" required></v-text-field>
+                            <v-text-field v-model="titular" label="Titular" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm2 md2>
-                            <v-text-field mask="##.###-###" v-model="cep" label="CEP" required @change="BuscarCEP()"></v-text-field>
+                            <v-text-field mask="##.###-###" v-model="cep" label="CEP" :rules="[rules.required]" required @change="BuscarCEP()"></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm4 md4>
-                            <v-text-field v-model="cidade" label="Cidade" required></v-text-field>
+                            <v-text-field v-model="cidade" label="Cidade" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm2 md2>
-                            <v-text-field v-model="uf" label="UF" required></v-text-field>
+                            <v-text-field v-model="uf" label="UF" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm4 md4>
                             <v-select :items="bairro_items" v-model="bairro" label="Bairro" return-object></v-select>
@@ -107,16 +107,16 @@
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field v-model="contato" label="Contato" required></v-text-field>
+                            <v-text-field v-model="contato" label="Contato" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field mask="(##) #####-####" v-model="celular" label="Celular" required></v-text-field>
+                            <v-text-field mask="(##) #####-####" v-model="celular" label="Celular" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field mask="(##) ####-####" v-model="telefone" label="Telefone" required></v-text-field>
+                            <v-text-field mask="(##) ####-####" v-model="telefone" label="Telefone" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field v-model="email" label="E-mail" required :rules="[rules.email]"></v-text-field>
+                            <v-text-field v-model="email" label="E-mail" required :rules="[rules.email, rules.required]"></v-text-field>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>

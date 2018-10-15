@@ -45,6 +45,7 @@
         getAgendas() {
             this.$http.post("agenda.asmx/getAgendas", { anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
                 this.agendas = JSON.parse(res.data.d)
+                $('#btn-buscar').removeAttr("disabled")
             })
         },
 
