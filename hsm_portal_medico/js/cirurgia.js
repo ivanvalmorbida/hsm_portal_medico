@@ -2,6 +2,9 @@
     el: '#app',
     data: function data() {
         return {
+            rules: {
+                required: (value) => !!value || 'Este campo é requerido!'
+            }, valid: true,
             guia: null, autorizacao: null, data_autoriza: null, paci: null,
             data_autoriza_Formatted: null, menu_data_autoriza: false,
             valid_autoriza: null, valid_autoriza_Formatted: null,
@@ -43,10 +46,12 @@
 
     methods: {
         getAgendas() {
-            this.$http.post("agenda.asmx/getAgendas", { anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
-                this.agendas = JSON.parse(res.data.d)
-                $('#btn-buscar').removeAttr("disabled")
-            })
+            if (this.$refs.form.validate()) {            
+                this.$http.post("agenda.asmx/getAgendas", { anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
+                    this.agendas = JSON.parse(res.data.d)
+                    $('#btn-buscar').removeAttr("disabled")
+                })
+            }
         },
 
         querySelections(v) {

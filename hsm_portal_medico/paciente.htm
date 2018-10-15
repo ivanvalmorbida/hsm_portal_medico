@@ -107,16 +107,16 @@
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field v-model="contato" label="Contato" :rules="[rules.required]" required></v-text-field>
+                            <v-text-field v-model="contato" label="Contato"></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field mask="(##) #####-####" v-model="celular" label="Celular" :rules="[rules.required]" required></v-text-field>
+                            <v-text-field mask="(##) #####-####" v-model="celular" label="Celular"></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field mask="(##) ####-####" v-model="telefone" label="Telefone" :rules="[rules.required]" required></v-text-field>
+                            <v-text-field mask="(##) ####-####" v-model="telefone" label="Telefone"></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm3 md3>
-                            <v-text-field v-model="email" label="E-mail" required :rules="[rules.email, rules.required]"></v-text-field>
+                            <v-text-field v-model="email" label="E-mail"></v-text-field>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
@@ -148,7 +148,7 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
-            </form>
+            </v-form>
         </v-app>
     </div>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>    

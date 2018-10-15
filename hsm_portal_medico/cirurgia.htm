@@ -10,83 +10,85 @@
 
 <body>
     <div id="app" style="padding: 0px 20px 0px 20px">
-        <v-app id="inspire">
-            <v-container fluid grid-list-md>
-                <h1 class="display-1">Cirurgias:</h1>
-                <v-layout row wrap>
-                    <v-flex d-flex xs12 sm6 md3>
-                        <v-text-field v-model="guia" label="Nr.Guia" required></v-text-field>
-                    </v-flex>
-                    <v-flex d-flex xs12 sm6 md3>
-                        <v-text-field v-model="autorizacao" label="Nr.Autorização" required></v-text-field>
-                    </v-flex>
-                    <v-flex d-flex xs12 sm6 md3>
-                        <v-menu ref="menu_data_autoriza" v-model="menu_data_autoriza" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
-                            offset-y full-width min-width="290px">
-                            <v-text-field slot="activator" v-model="data_autoriza_Formatted" label="Data Autorização" prepend-icon="event"></v-text-field>
-                            <v-date-picker locale="pt-br" v-model="data_autoriza" @input="menu_data_autoriza = false"></v-date-picker>
-                        </v-menu>
-                    </v-flex>
-                    <v-flex d-flex xs12 sm6 md3>
-                        <v-menu ref="menu_valid_autoriza" v-model="menu_valid_autoriza" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
-                            offset-y full-width min-width="290px">
-                            <v-text-field slot="activator" v-model="valid_autoriza_Formatted" label="Validade Autorização" prepend-icon="event"></v-text-field>
-                            <v-date-picker locale="pt-br" v-model="valid_autoriza" @input="menu_valid_autoriza = false"></v-date-picker>
-                        </v-menu>
-                    </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                    <v-flex d-flex xs12 sm3 md2>
-                        <v-text-field v-model="tempo" label="Tempo Estimado" type="number" required></v-text-field>
-                    </v-flex>
-                    <v-flex d-flex xs12 sm9 md10>
-                        <v-radio-group label="Tipo de Anestesia" v-model="anestesia" row>
-                            <v-radio label="Sem anestesista" value="2"></v-radio>
-                            <v-radio label="Com anestesista" value="1"></v-radio>
-                        </v-radio-group>
-                    </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                    <v-flex d-flex xs12 sm12 md12>
-                        <v-select :loading="loading" :items="items" :search-input.sync="search" v-model="procedimento" label="Procedimento Cirurgico"
-                            autocomplete return-object></v-select>
-                        <v-btn flat icon color="primary" @click="addItem()">
-                            <v-icon>check_circle</v-icon>
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-data-table :headers="headers" :items="procedimentos" hide-actions>
-                    <template slot="items" slot-scope="props">
-                        <td>{{ props.item.procedimento }}</td>
-                        <td>{{ props.item.descricao }}</td>
-                        <td>{{ props.item.tempo }}</td>
-                        <td>
-                            <v-btn icon class="mx-0" @click="delItem(props.item)">
-                                <v-icon color="pink">delete</v-icon>
-                            </v-btn>
-                        </td>
-                    </template>
-                </v-data-table>
-                <v-layout row wrap>
-                    <v-flex d-flex>
-                        <v-card color="indigo" dark>
-                            <v-btn id="btn-buscar" color="success" onclick="this.setAttribute('disabled', true);" @click="getAgendas()">Buscar agendas disponiveis</v-btn>
-                            <v-btn color="primary" onclick="location.href = 'Default.aspx'">Inicio</v-btn>
-                        </v-card>
-                    </v-flex>                  
-                </v-layout>   
-                <v-data-table :headers="headers_agenda" :items="agendas" hide-actions>
-                    <template slot="items" slot-scope="props">
-                        <td>{{ props.item.HoraIniF }}</td>
-                        <td>
-                            <v-btn icon class="mx-0" @click="agendar(props.item)">
+        <v-form ref="form" v-model="valid" lazy-validation>
+            <v-app id="inspire">
+                <v-container fluid grid-list-md>
+                    <h1 class="display-1">Cirurgias:</h1>
+                    <v-layout row wrap>
+                        <v-flex d-flex xs12 sm6 md3>
+                            <v-text-field v-model="guia" label="Nr.Guia" :rules="[rules.required]" required></v-text-field>
+                        </v-flex>
+                        <v-flex d-flex xs12 sm6 md3>
+                            <v-text-field v-model="autorizacao" label="Nr.Autorização" :rules="[rules.required]" required></v-text-field>
+                        </v-flex>
+                        <v-flex d-flex xs12 sm6 md3>
+                            <v-menu ref="menu_data_autoriza" v-model="menu_data_autoriza" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
+                                offset-y full-width min-width="290px">
+                                <v-text-field :rules="[rules.required]" required slot="activator" v-model="data_autoriza_Formatted" label="Data Autorização" prepend-icon="event"></v-text-field>
+                                <v-date-picker :rules="[rules.required]" required locale="pt-br" v-model="data_autoriza" @input="menu_data_autoriza = false"></v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                        <v-flex d-flex xs12 sm6 md3>
+                            <v-menu ref="menu_valid_autoriza" v-model="menu_valid_autoriza" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
+                                offset-y full-width min-width="290px">
+                                <v-text-field :rules="[rules.required]" required slot="activator" v-model="valid_autoriza_Formatted" label="Validade Autorização" prepend-icon="event"></v-text-field>
+                                <v-date-picker locale="pt-br" v-model="valid_autoriza" @input="menu_valid_autoriza = false"></v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex d-flex xs12 sm3 md2>
+                            <v-text-field :rules="[rules.required]" required readonly v-model="tempo" label="Tempo Estimado" type="number" required></v-text-field>
+                        </v-flex>
+                        <v-flex d-flex xs12 sm9 md10>
+                            <v-radio-group :rules="[rules.required]" required label="Tipo de Anestesia" v-model="anestesia" row>
+                                <v-radio label="Sem anestesista" value="2"></v-radio>
+                                <v-radio label="Com anestesista" value="1"></v-radio>
+                            </v-radio-group>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex d-flex xs12 sm12 md12>
+                            <v-select :loading="loading" :items="items" :search-input.sync="search" v-model="procedimento" label="Procedimento Cirurgico"
+                                autocomplete return-object></v-select>
+                            <v-btn flat icon color="primary" @click="addItem()">
                                 <v-icon>check_circle</v-icon>
                             </v-btn>
-                        </td>
-                    </template>
-                </v-data-table>                             
-            </v-container>
-        </v-app>
+                        </v-flex>
+                    </v-layout>
+                    <v-data-table :headers="headers" :items="procedimentos" hide-actions>
+                        <template slot="items" slot-scope="props">
+                            <td>{{ props.item.procedimento }}</td>
+                            <td>{{ props.item.descricao }}</td>
+                            <td>{{ props.item.tempo }}</td>
+                            <td>
+                                <v-btn icon class="mx-0" @click="delItem(props.item)">
+                                    <v-icon color="pink">delete</v-icon>
+                                </v-btn>
+                            </td>
+                        </template>
+                    </v-data-table>
+                    <v-layout row wrap>
+                        <v-flex d-flex>
+                            <v-card color="indigo" dark>
+                                <v-btn id="btn-buscar" color="success" onclick="this.setAttribute('disabled', true);" @click="getAgendas()">Buscar agendas disponiveis</v-btn>
+                                <v-btn color="primary" onclick="location.href = 'Default.aspx'">Inicio</v-btn>
+                            </v-card>
+                        </v-flex>                  
+                    </v-layout>   
+                    <v-data-table :headers="headers_agenda" :items="agendas" hide-actions>
+                        <template slot="items" slot-scope="props">
+                            <td>{{ props.item.HoraIniF }}</td>
+                            <td>
+                                <v-btn icon class="mx-0" @click="agendar(props.item)">
+                                    <v-icon>check_circle</v-icon>
+                                </v-btn>
+                            </td>
+                        </template>
+                    </v-data-table>                             
+                </v-container>
+            </v-app>
+        </v-form>
     </div>
     <script src='https://unpkg.com/babel-polyfill/dist/polyfill.min.js'></script>
     <script src='https://unpkg.com/vue/dist/vue.js'></script>

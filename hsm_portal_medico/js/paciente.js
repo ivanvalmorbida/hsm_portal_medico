@@ -3,12 +3,10 @@
     data: function data() {
         return {
             rules: {
-                required: (value) => !!value || 'Este campo é requerido!.',
-                email: (value) => {
-                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    return pattern.test(value) || 'E-mail inválido.'
-                }
+                required: (value) => !!value || 'Este campo é requerido!',
+                email: (value) => /.+@.+/.test(value) || 'E-mail inválido.'
             },
+          
             cpf: null, nome: null, nascimento: null, menu_nascimento: false,
             nascimento_Formatted: null, sexo: null, estadocivil_items: [], rg: null,
             estadocivil: null, profissao: null, profissao_items: [], convenio: null,
