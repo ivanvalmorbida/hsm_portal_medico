@@ -29,7 +29,8 @@ namespace hsm_portal_medico
             sqlPar.ParameterName = "@Med";
             colPar.Add(sqlPar);
 
-			strSQL.Append("SELECT nome, crm, ufcrm from MEDICO").AppendLine(); 
+			strSQL.Append("SELECT nome, crm, ufcrm, Case when (select count(*) from AGENDA_HOSPITAL where NOMEPACI='HORARIO RESERVADO'" +
+                " and DATA_CONSULTA>GETDATE() and MEDICOEXE=MEDICO.codigo)>0 then '1' else '0' end as reserva from MEDICO").AppendLine(); 
 			strSQL.Append("WHERE codigo=@Med").AppendLine(); 
          
 			tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Medico", colPar).Tables[0];
@@ -72,7 +73,7 @@ namespace hsm_portal_medico
         }
 
 		[WebMethod]
-        public string getAgendas(int anestesia, int tempo)
+        public string getAgendas(int anestesia, int tempo, string reserva)
         {
             Conexao cn = new Conexao();
 			SqlParameter sqlPar = new SqlParameter();
@@ -110,8 +111,12 @@ namespace hsm_portal_medico
 			strSQL.Append("FROM AGENDA_HOSPITAL").AppendLine(); 
 			strSQL.Append("WHERE MEDICO IN(SELECT CODIGO FROM MEDICO WHERE TIPO='I' and TipoAnestesia=@Anestesia)").AppendLine();
             strSQL.Append("AND ((MEDICOEXE=@Med and STATUS=(SELECT VALOR FROM PARAMETROS_SOFTWARE Where PARAMETRO='glb_str_STATUS_RESERVADO') and NOMEPACI='HORARIO RESERVADO')").AppendLine();
-            strSQL.Append("OR (Isnull(MEDICOEXE, 0)=0 and Isnull(STATUS, '')='' and Isnull(NOMEPACI, '')=''))").AppendLine();
-            strSQL.Append("AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5,").AppendLine(); 
+
+            if (reserva=="0") {
+                strSQL.Append("OR (Isnull(MEDICOEXE, 0)=0 and Isnull(STATUS, '')='' and Isnull(NOMEPACI, '')='')").AppendLine();
+            }
+
+            strSQL.Append(")AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5,").AppendLine(); 
             strSQL.Append("iif(datepart(dw, getdate())=1, 4, 3)), getdate()) as DATE)").AppendLine();
 			strSQL.Append("GROUP BY Medico, DATA_CONSULTA, Isnull(MEDICOEXE,0)) as d where datediff (minute, HoraIni, HoraFim)>=@tempo").AppendLine();
 			strSQL.Append("Order by Medico desc, HoraIni").AppendLine(); 

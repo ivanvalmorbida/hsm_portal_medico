@@ -7,8 +7,8 @@
             }, valid: true,
             guia: null, autorizacao: null, data_autoriza: null, paci: null,
             data_autoriza_Formatted: null, menu_data_autoriza: false,
-            valid_autoriza: null, valid_autoriza_Formatted: null,
-            menu_valid_autoriza: false, tempo: null, anestesia: null, procedimento: [],
+            valid_autoriza: null, valid_autoriza_Formatted: null, opcao_reserva: false,
+            menu_valid_autoriza: false, tempo: null, anestesia: null, procedimento: [], reserva: 0,
 
             headers: [
                 { text: 'Procedimento', align: 'left', value: 'procedimento' },
@@ -46,11 +46,15 @@
 
     methods: {
         getAgendas() {
-            if (this.$refs.form.validate()) {            
-                this.$http.post("agenda.asmx/getAgendas", { anestesia: this.anestesia, tempo: this.tempo }).then((res) => {
+            $('#btn-buscar').attr("disabled","true")
+            if (this.$refs.form.validate()) {
+                this.$http.post("agenda.asmx/getAgendas", { anestesia: this.anestesia, tempo: this.tempo, reserva: this.reserva }).then((res) => {
                     this.agendas = JSON.parse(res.data.d)
                     $('#btn-buscar').removeAttr("disabled")
                 })
+            }
+            else {
+                $('#btn-buscar').removeAttr("disabled")
             }
         },
 
@@ -119,6 +123,12 @@
     },
 
     created() {
+        this.$http.post("agenda.asmx/getUsuarioDados").then((res) => {
+            var tmp = JSON.parse(res.data.d)
+            this.reserva = tmp[0].reserva
+            this.opcao_reserva = (this.reserva=="1")
+        })
+
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {
           params[match[1]] = match[2]
