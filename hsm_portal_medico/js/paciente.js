@@ -72,6 +72,7 @@
                 objPaciente["cep"] = this.cep
                 objPaciente["validade_cart"] = this.validade_cart
                 objPaciente["bairro"] = this.bairro
+                objPaciente["contato"] = this.contato
                 objPaciente["celular"] = this.celular
                 objPaciente["telefone"] = this.telefone
                 objPaciente["email"] = this.email
@@ -101,6 +102,7 @@
             this.validade_cart = null
             this.cep = null
             this.bairro = null
+            this.contato = null
             this.celular = null
             this.telefone = null
             this.email = null
@@ -128,8 +130,9 @@
                             if (paci.validade_cart != null) this.validade_cart = paci.validade_cart.substring(0,10)
                             this.cep = paci.cep
                             this.bairro = paci.bairro
+                            this.contato = paci.contato
                             this.celular = paci.celular
-                            this.telefone = paci.telefone.substring(1, 12).replace(' ', '')
+                            this.telefone = paci.telefone.substring(0, 12).replace(' ', '')
                             this.email = paci.email
 
                             this.BuscarCEP()

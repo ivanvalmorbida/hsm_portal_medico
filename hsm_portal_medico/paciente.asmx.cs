@@ -31,9 +31,9 @@ namespace hsm_portal_medico
 
 				strSQL = "Insert into PACIENTE (cnpjcpf, nome, data_nascim, sexo, rg, est_civil, profissao, " +
     				"nomepai, nomemae, convenio, convenio_plano, nrconvenio, titular, convenio_validade_carteira, " +
-    				"cep, bairro, celular, foneresid, email) values (@cpf, @nome, @nascimento, @sexo, @rg, @estadocivil, " +
+    				"cep, bairro, celular, foneresid, email, contato) values (@cpf, @nome, @nascimento, @sexo, @rg, @estadocivil, " +
     				"@profissao, @pai, @mae, @convenio, @plano, @carteirinha, @titular, @validade_cart, @cep, " +
-    				"@bairro, @celular, @telefone, @email)";
+    				"@bairro, @celular, @telefone, @email, @contato)";
 			}
 			else
 			{
@@ -41,7 +41,7 @@ namespace hsm_portal_medico
 					"rg=@rg, est_civil=@estadocivil, profissao=@profissao, nomepai=@pai, nomemae=@mae, " +
 					"convenio=@convenio, convenio_plano=@plano, nrconvenio=@carteirinha, titular=@titular, " +
 					"convenio_validade_carteira=@validade_cart, cep=@cep, bairro=@bairro, celular=@celular, " +
-					"foneresid=@telefone, email=@email where codigo=@codigo";
+					"foneresid=@telefone, email=@email, contato=@contato where codigo=@codigo";
 			}
 			cn.ExecuteWithParam(strSQL, colPar);
 			
@@ -75,7 +75,7 @@ namespace hsm_portal_medico
 			    "Isnull(NOMEPAI,'') pai, Isnull(NOMEMAE,'') mae, Isnull(convenio,0) convenio, " +
 				"Isnull(CONVENIO_PLANO,'') plano, Isnull(NRCONVENIO,'') carteirinha, Isnull(TITULAR,'') titular, " +
 				"CONVENIO_VALIDADE_CARTEIRA validade_cart, Isnull(CEP,'') cep, Isnull(BAIRRO,'') bairro, " +
-				"Isnull(Celular,'') celular, Isnull(FONERESID,'') telefone, Isnull(EMAIL,'') email " +
+				"Isnull(Celular,'') celular, Isnull(FONERESID,'') telefone, Isnull(EMAIL,'') email, Isnull(contato,'') contato " +
 				"From PACIENTE where CNPJCPF=@CPF";
             
             tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Paciente", colPar).Tables[0];
@@ -159,6 +159,7 @@ namespace hsm_portal_medico
         public DateTime validade_cart { get; set; }
         public string cep { get; set; }
         public string bairro { get; set; }
+        public string contato { get; set; }
         public string celular { get; set; }
         public string telefone { get; set; }
         public string email { get; set; }
