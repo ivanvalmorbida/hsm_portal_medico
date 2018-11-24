@@ -116,8 +116,8 @@ namespace hsm_portal_medico
                 strSQL.Append("OR (Isnull(MEDICOEXE, 0)=0 and Isnull(STATUS, '')='' and Isnull(NOMEPACI, '')='')").AppendLine();
             }
 
-            strSQL.Append(")AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 5,").AppendLine(); 
-            strSQL.Append("iif(datepart(dw, getdate())=1, 4, 3)), getdate()) as DATE)").AppendLine();
+            strSQL.Append(")AND DATA_CONSULTA>=Cast(dateadd(d, iif(datepart(dw, getdate())=7, 3,").AppendLine(); 
+            strSQL.Append("iif(datepart(dw, getdate())=1, 2, 1)), getdate()) as DATE)").AppendLine();
 			strSQL.Append("GROUP BY Medico, DATA_CONSULTA, Isnull(MEDICOEXE,0)) as d where datediff (minute, HoraIni, HoraFim)>=@tempo").AppendLine();
 			strSQL.Append("Order by Medico desc, HoraIni").AppendLine(); 
          

@@ -15,6 +15,11 @@
                 <v-container fluid grid-list-md>
                     <h1 class="display-1">Cirurgias:</h1>
                     <v-layout row wrap>
+                        <v-flex d-flex xs12 sm6 md6>
+                            <v-select :items="convenio_items" v-model="convenio" label="Convênio" return-object :rules="[rules.required]" required></v-select>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap v-if="opcao_convenio">
                         <v-flex d-flex xs12 sm6 md3>
                             <v-text-field v-model="guia" label="Nr.Guia" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
@@ -38,7 +43,7 @@
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm3 md2>
-                            <v-text-field :rules="[rules.required]" required readonly v-model="tempo" label="Tempo Estimado" type="number" required></v-text-field>
+                            <v-text-field :rules="[rules.required]" v-model="tempo" label="Tempo Estimado" type="number" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm9 md10>
                             <v-radio-group :rules="[rules.required]" required label="Tipo de Anestesia" v-model="anestesia" row>

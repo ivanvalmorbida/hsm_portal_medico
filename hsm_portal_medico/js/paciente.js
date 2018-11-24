@@ -65,7 +65,7 @@
                 objPaciente["profissao"] = this.profissao
                 objPaciente["pai"] = this.pai
                 objPaciente["mae"] = this.mae
-                objPaciente["convenio"] = this.convenio
+                objPaciente["convenio"] = this.convenio.value
                 objPaciente["plano"] = this.plano
                 objPaciente["carteirinha"] = this.carteirinha
                 objPaciente["titular"] = this.titular
@@ -79,7 +79,7 @@
                 
                 this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
                 .then((res) => {
-                    location.href = 'cirurgia.htm?p='+res.data.d
+                    location.href = 'cirurgia.htm?p=' + res.data.d + '&c=' + this.convenio.value
                 })
             }
         },

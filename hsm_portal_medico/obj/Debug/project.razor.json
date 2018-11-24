@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "c:\\Local Projects\\hsm_portal_medico\\hsm_portal_medico\\hsm_portal_medico.csproj",
+  "TargetFramework": "v4.5",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}

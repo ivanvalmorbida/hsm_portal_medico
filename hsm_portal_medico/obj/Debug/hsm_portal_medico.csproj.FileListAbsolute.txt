@@ -24,3 +24,4 @@ C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medic
 C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.csproj.CopyComplete
 C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.dll
 C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.pdb
+C:\Local Projects\hsm_portal_medico\hsm_portal_medico\obj\Debug\hsm_portal_medico.csprojAssemblyReference.cache

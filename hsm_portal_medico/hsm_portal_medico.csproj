@@ -49,7 +49,12 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="parametros_gerais.asmx.cs">
+      <DependentUpon>parametros_gerais.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Content Include="Global.asax" />
+    <Content Include="parametros_gerais.asmx" />
     <Content Include="Web.config" />
     <Content Include="js\cirurgia.js" />
     <Content Include="js\paciente.js" />

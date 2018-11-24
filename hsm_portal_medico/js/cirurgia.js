@@ -5,10 +5,9 @@
             rules: {
                 required: (value) => !!value || 'Este campo é requerido!'
             }, valid: true,
-            guia: null, autorizacao: null, data_autoriza: null, paci: null,
-            data_autoriza_Formatted: null, menu_data_autoriza: false,
-            valid_autoriza: null, valid_autoriza_Formatted: null, opcao_reserva: false,
-            menu_valid_autoriza: false, tempo: null, anestesia: null, procedimento: [], reserva: 0,
+            convenio_items: [], convenio: null, guia: null, autorizacao: null, data_autoriza: null, paci: null,
+            data_autoriza_Formatted: null, menu_data_autoriza: false, valid_autoriza: null, valid_autoriza_Formatted: null,
+            opcao_reserva: false, menu_valid_autoriza: false, tempo: null, anestesia: null, procedimento: [], reserva: 0,
 
             headers: [
                 { text: 'Procedimento', align: 'left', value: 'procedimento' },
@@ -27,6 +26,7 @@
             loading: false,
             items: [],
             search: null,
+            opcao_convenio: true,
         };
     },
 
@@ -119,10 +119,23 @@
 
             const [year, month, day] = date.split('-')
             return `${day}/${month}/${year}`
-        }
+        },
+
+        VerificaParticular() {
+            this.$http.post("parametros_gerais.asmx/getParticular")
+            .then((res) => {
+                var r = res.data.d
+                this.opcao_convenio=(r != this.convenio)
+            })
+        },
     },
 
     created() {
+        this.$http.post("paciente.asmx/getConvenio")
+            .then((res) => {
+                this.convenio_items = JSON.parse(res.data.d)
+            })
+
         this.$http.post("agenda.asmx/getUsuarioDados").then((res) => {
             var tmp = JSON.parse(res.data.d)
             this.reserva = tmp[0].reserva
@@ -134,6 +147,9 @@
           params[match[1]] = match[2]
         }
         this.paci = params.p    
+        this.convenio = params.c 
+
+        this.VerificaParticular()
     }
 });
 
