@@ -55,7 +55,7 @@
                                 return-object></v-select>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md4>
-                            <v-select :items="profissao_items" v-model="profissao" label="Profissão" return-object></v-select>
+                            <v-select :items="profissao_items" v-model="profissao" label="Profissão" return-value></v-select>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
@@ -68,7 +68,7 @@
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm6 md6>
-                            <v-select :items="convenio_items" v-model="convenio" label="Convênio" return-object :rules="[rules.required]" required></v-select>
+                            <v-select :items="convenio_items" v-model="convenio" label="Convênio" return-value :rules="[rules.required]" required></v-select>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md6>
                             <v-text-field v-model="plano" label="Plano"></v-text-field>
@@ -102,7 +102,7 @@
                             <v-text-field v-model="uf" label="UF" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm4 md4>
-                            <v-select :items="bairro_items" v-model="bairro" label="Bairro" return-object></v-select>
+                            <v-select :items="bairro_items" v-model="bairro" label="Bairro" return-value></v-select>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>

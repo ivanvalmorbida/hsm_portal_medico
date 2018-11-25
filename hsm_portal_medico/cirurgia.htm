@@ -15,8 +15,8 @@
                 <v-container fluid grid-list-md>
                     <h1 class="display-1">Cirurgias:</h1>
                     <v-layout row wrap>
-                        <v-flex d-flex xs12 sm6 md6>
-                            <v-select :items="convenio_items" v-model="convenio" label="Convênio" return-object :rules="[rules.required]" required></v-select>
+                        <v-flex d-flex xs12 sm12 md12>
+                            <v-select :on-change="VerificaParticular()" :items="convenio_items" v-model="convenio" label="Convênio" return-object :rules="[rules.required]" required></v-select>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap v-if="opcao_convenio">

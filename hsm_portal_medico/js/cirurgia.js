@@ -5,7 +5,7 @@
             rules: {
                 required: (value) => !!value || 'Este campo é requerido!'
             }, valid: true,
-            convenio_items: [], convenio: null, guia: null, autorizacao: null, data_autoriza: null, paci: null,
+            convenio_items: [], convenio: {'value':0,'text':''}, guia: null, autorizacao: null, data_autoriza: null, paci: null,
             data_autoriza_Formatted: null, menu_data_autoriza: false, valid_autoriza: null, valid_autoriza_Formatted: null,
             opcao_reserva: false, menu_valid_autoriza: false, tempo: null, anestesia: null, procedimento: [], reserva: 0,
 
@@ -27,6 +27,7 @@
             items: [],
             search: null,
             opcao_convenio: true,
+            part: null,
         };
     },
 
@@ -45,6 +46,7 @@
     },
 
     methods: {
+
         getAgendas() {
             $('#btn-buscar').attr("disabled","true")
             if (this.$refs.form.validate()) {
@@ -122,18 +124,28 @@
         },
 
         VerificaParticular() {
-            this.$http.post("parametros_gerais.asmx/getParticular")
-            .then((res) => {
-                var r = res.data.d
-                this.opcao_convenio=(r != this.convenio)
-            })
+            this.opcao_convenio=(this.part != this.convenio.value)
         },
     },
 
     created() {
+
+        this.$http.post("parametros_gerais.asmx/getParticular")
+        .then((res) => {
+            this.part = res.data.d
+        })  
+
+        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
+        while(match = regex.exec(url)) {
+          params[match[1]] = match[2]
+        }
+        this.paci = params.p
+        
         this.$http.post("paciente.asmx/getConvenio")
             .then((res) => {
                 this.convenio_items = JSON.parse(res.data.d)
+                this.convenio = this.convenio_items.find(obj => obj.value == params.c)
+                this.VerificaParticular()
             })
 
         this.$http.post("agenda.asmx/getUsuarioDados").then((res) => {
@@ -141,20 +153,5 @@
             this.reserva = tmp[0].reserva
             this.opcao_reserva = (this.reserva=="1")
         })
-
-        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
-        while(match = regex.exec(url)) {
-          params[match[1]] = match[2]
-        }
-        this.paci = params.p    
-        this.convenio = params.c 
-
-        this.VerificaParticular()
     }
 });
-
-/*parseDate(date) {
-    if (!date) return null
-    const [month, day, year] = date.split('/')
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-}*/

@@ -79,7 +79,7 @@
                 
                 this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
                 .then((res) => {
-                    location.href = 'cirurgia.htm?p=' + res.data.d + '&c=' + this.convenio.value
+                    location.href = 'cirurgia.htm?p=' + res.data.d + '&c=' + this.convenio
                 })
             }
         },
