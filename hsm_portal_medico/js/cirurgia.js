@@ -102,6 +102,7 @@
             })
 
             objAgendar["sala"] = item.Sala
+            objAgendar["convenio"] = item.convenio
             objAgendar["paciente"] = this.paci
             objAgendar["tempo"] = this.tempo
             objAgendar["horaini"] = item.HoraIni

@@ -139,6 +139,12 @@ namespace hsm_portal_medico
             sqlPar.Value = obj.sala;
             sqlPar.ParameterName = "@sala";
             colPar.Add(sqlPar);
+   
+            sqlPar = new SqlParameter();
+            sqlPar.DbType = DbType.Int32;
+            sqlPar.Value = obj.convenio;
+            sqlPar.ParameterName = "@convenio";
+            colPar.Add(sqlPar);
 
             sqlPar = new SqlParameter();
             sqlPar.DbType = DbType.Int32;
@@ -176,37 +182,40 @@ namespace hsm_portal_medico
             sqlPar.Value = hora;
             sqlPar.ParameterName = "@horaf";
             colPar.Add(sqlPar);
-            
-            sqlPar = new SqlParameter();
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.guia;
-            sqlPar.ParameterName = "@guia";
-            colPar.Add(sqlPar);
 
-            sqlPar = new SqlParameter();
-            sqlPar.DbType = DbType.String;
-            sqlPar.Value = obj.autorizacao;
-            sqlPar.ParameterName = "@autorizacao";
-            colPar.Add(sqlPar);
+            if (obj.data_autoriza.Year != 1){
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.String;
+                sqlPar.Value = obj.guia;
+                sqlPar.ParameterName = "@guia";
+                colPar.Add(sqlPar);
 
-            sqlPar = new SqlParameter();
-            sqlPar.DbType = DbType.Date;
-            sqlPar.Value = obj.data_autoriza.Date;
-            sqlPar.ParameterName = "@data_autoriza";
-            colPar.Add(sqlPar);
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.String;
+                sqlPar.Value = obj.autorizacao;
+                sqlPar.ParameterName = "@autorizacao";
+                colPar.Add(sqlPar);
 
-            sqlPar = new SqlParameter();
-            sqlPar.DbType = DbType.Date;
-            sqlPar.Value = obj.valid_autoriza.Date;
-			sqlPar.ParameterName = "@valid_autoriza";
-            colPar.Add(sqlPar);
-            
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.Date;
+                sqlPar.Value = obj.data_autoriza.Date;
+                sqlPar.ParameterName = "@data_autoriza";
+                colPar.Add(sqlPar);
+
+                sqlPar = new SqlParameter();
+                sqlPar.DbType = DbType.Date;
+                sqlPar.Value = obj.valid_autoriza.Date;
+                sqlPar.ParameterName = "@valid_autoriza";
+                colPar.Add(sqlPar);
+            }
             strSQL.Append("UPDATE AGENDA_HOSPITAL set medicoexe=@medico, paciente=@paciente,").AppendLine(); 
             strSQL.Append("NOMEPACI=(select nome from paciente where codigo=@paciente),").AppendLine();
-            strSQL.Append("Convenio=(select convenio from paciente where codigo=@paciente),").AppendLine();
-            strSQL.Append("REQUISICAO=@guia, AUTORIZACAO=@autorizacao, DATA_AUTORIZACAO=@data_autoriza,").AppendLine();
-            strSQL.Append("DATA_VALIDADE_AUTORIZACAO=@valid_autoriza").AppendLine();
+            strSQL.Append("Convenio=@convenio").AppendLine();
 
+            if (obj.data_autoriza.Year != 1){
+                strSQL.Append(", REQUISICAO=@guia, AUTORIZACAO=@autorizacao, ").AppendLine();
+                strSQL.Append("DATA_AUTORIZACAO=@data_autoriza, DATA_VALIDADE_AUTORIZACAO=@valid_autoriza").AppendLine();
+            }
             if(obj.procedimentos.Count>0){
                 sqlPar = new SqlParameter();
                 sqlPar.DbType = DbType.String;
@@ -266,6 +275,7 @@ namespace hsm_portal_medico
 		public class objAgendar
 		{
 			public int sala { get; set; }
+            public int convenio { get; set; }
 			public int paciente { get; set; }
 			public int tempo { get; set; }
 			public DateTime horaini { get; set; }
