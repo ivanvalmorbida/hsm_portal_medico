@@ -1,10 +1,49 @@
 ﻿var vm = new Vue({
     el: '#app',
     data: function data() {
+   
         return {
+            vercpf: function (cpf) {
+                if (cpf == null)
+                    return false;
+
+                if (cpf.length != 11 ||
+                    cpf == "00000000000" ||
+                    cpf == "11111111111" ||
+                    cpf == "22222222222" ||
+                    cpf == "33333333333" ||
+                    cpf == "44444444444" ||
+                    cpf == "55555555555" ||
+                    cpf == "66666666666" ||
+                    cpf == "77777777777" ||
+                    cpf == "88888888888" ||
+                    cpf == "99999999999")
+                    return 'CPF Inválido!';
+        
+                add = 0;
+        
+                for (i = 0; i < 9; i++)
+                        add += parseInt(cpf.charAt(i)) * (10 - i);
+                rev = 11 - (add % 11);
+                if (rev == 10 || rev == 11)
+                    rev = 0;
+                if (rev != parseInt(cpf.charAt(9)))
+                    return 'CPF Inválido!';
+                add = 0;
+                        for (i = 0; i < 10; i++)
+                        add += parseInt(cpf.charAt(i)) * (11 - i);
+                rev = 11 - (add % 11);
+                if (rev == 10 || rev == 11)
+                    rev = 0;
+                if (rev != parseInt(cpf.charAt(10)))
+                    return 'CPF Inválido!';
+                return true;
+            },
+
             rules: {
                 required: (value) => !!value || 'Este campo é requerido!',
-                email: (value) => /.+@.+/.test(value) || 'E-mail inválido.'
+                email: (value) => /.+@.+/.test(value) || 'E-mail inválido.',
+                cpf: (value) => this.vercpf(value)
             },
           
             cpf: null, nome: null, nascimento: null, menu_nascimento: false,
@@ -51,6 +90,15 @@
     },
 
     methods: {
+        parseDate (date) {
+            if (!date) return null
+            
+            day = date.substring(0,2)
+            month = date.substring(2,4)
+            year = date.substring(4,8)
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+          },
+          
         gravar() {
             if (this.$refs.form.validate()) {
                 var objPaciente = new Object()
