@@ -103,32 +103,38 @@
             if (this.$refs.form.validate()) {
                 var objPaciente = new Object()
                 
-                objPaciente["codigo"] = this.codigo
-                objPaciente["cpf"] = this.cpf
-                objPaciente["nome"] = this.nome
-                objPaciente["nascimento"] = this.nascimento
-                objPaciente["sexo"] = this.sexo
-                objPaciente["rg"] = this.rg
-                objPaciente["estadocivil"] = this.estadocivil
-                objPaciente["profissao"] = this.profissao
-                objPaciente["pai"] = this.pai
-                objPaciente["mae"] = this.mae
-                objPaciente["convenio"] = this.convenio.value
-                objPaciente["plano"] = this.plano
-                objPaciente["carteirinha"] = this.carteirinha
-                objPaciente["titular"] = this.titular
-                objPaciente["cep"] = this.cep
-                objPaciente["validade_cart"] = this.validade_cart
-                objPaciente["bairro"] = this.bairro
-                objPaciente["contato"] = this.contato
-                objPaciente["celular"] = this.celular
-                objPaciente["telefone"] = this.telefone
-                objPaciente["email"] = this.email
-                
-                this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
-                .then((res) => {
-                    location.href = 'cirurgia.htm?p=' + res.data.d + '&c=' + this.convenio
-                })
+                try {
+                    if(this.codigo==null) {objPaciente["codigo"] = 0} else {objPaciente["codigo"] = this.codigo}
+                    objPaciente["cpf"] = this.cpf
+                    objPaciente["nome"] = this.nome
+                    objPaciente["nascimento"] = this.nascimento
+                    objPaciente["sexo"] = this.sexo
+                    objPaciente["rg"] = this.rg
+                    objPaciente["estadocivil"] = this.estadocivil
+                    objPaciente["cep"] = this.cep
+                    objPaciente["contato"] = this.contato
+                    objPaciente["celular"] = this.celular
+                    objPaciente["convenio"] = this.convenio
+
+                    if(this.profissao==null) {objPaciente["profissao"] = 0} else {objPaciente["profissao"] = this.profissao.value}
+                    if(this.pai==null) {objPaciente["pai"] = ''} else {objPaciente["pai"] = this.pai}
+                    if(this.mae==null) {objPaciente["mae"] = ''} else {objPaciente["mae"] = this.mae}
+                    if(this.plano==null) {objPaciente["plano"] = ''} else {objPaciente["plano"] = this.plano}                    
+                    if(this.carteirinha==null) {objPaciente["carteirinha"] = ''} else {objPaciente["carteirinha"] = this.carteirinha}                    
+                    if(this.titular==null) {objPaciente["titular"] = ''} else {objPaciente["titular"] = this.titular}
+                    if(this.validade_cart==null) {objPaciente["validade_cart"] = ''} else {objPaciente["validade_cart"] = this.validade_cart}
+                    if(this.bairro==null) {objPaciente["bairro"] = ''} else {objPaciente["bairro"] = this.bairro.value}
+                    if(this.telefone==null) {objPaciente["telefone"] = ''} else {objPaciente["telefone"] = this.telefone}
+                    if(this.email==null) {objPaciente["email"] = 0} else {objPaciente["email"] = this.email}
+
+                    this.$http.post("paciente.asmx/setPacienteCPF",{obj: objPaciente})
+                    .then((res) => {
+                        location.href = 'cirurgia.htm?p=' + res.data.d + '&c=' + this.convenio
+                    })
+                }
+                catch(err) {
+                    console.dir(err.message)
+                }
             }
         },
         BuscarCPF() {
@@ -168,7 +174,7 @@
                             this.sexo = paci.sexo
                             this.rg = paci.rg
                             this.estadocivil = paci.estadocivil
-                            this.profissao = paci.profissao
+                            this.profissao = {'text' : paci.profissao_, 'value' : paci.profissao}
                             this.pai = paci.pai
                             this.mae = paci.mae
                             this.convenio = paci.convenio
@@ -177,7 +183,7 @@
                             this.titular = paci.titular
                             if (paci.validade_cart != null) this.validade_cart = paci.validade_cart.substring(0,10)
                             this.cep = paci.cep
-                            this.bairro = paci.bairro
+                            this.bairro = {'text' : paci.bairro_, 'value' : paci.bairro}
                             this.contato = paci.contato
                             this.celular = paci.celular
                             this.telefone = paci.telefone.substring(0, 12).replace(' ', '')

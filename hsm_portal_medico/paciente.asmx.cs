@@ -75,7 +75,9 @@ namespace hsm_portal_medico
 			    "Isnull(NOMEPAI,'') pai, Isnull(NOMEMAE,'') mae, Isnull(convenio,0) convenio, " +
 				"Isnull(CONVENIO_PLANO,'') plano, Isnull(NRCONVENIO,'') carteirinha, Isnull(TITULAR,'') titular, " +
 				"CONVENIO_VALIDADE_CARTEIRA validade_cart, Isnull(CEP,'') cep, Isnull(BAIRRO,'') bairro, " +
-				"Isnull(Celular,'') celular, Isnull(FONERESID,'') telefone, Isnull(EMAIL,'') email, Isnull(contato,'') contato " +
+				"Isnull(Celular,'') celular, Isnull(FONERESID,'') telefone, Isnull(EMAIL,'') email, Isnull(contato,'') contato, " +
+				"(SELECT Nome FROM TABPROFISSOES where codigo=PACIENTE.profissao) as profissao_, "+
+				"(SELECT Nome FROM BAIRRO Where Codigo=PACIENTE.BAIRRO) as bairro_ "+
 				"From PACIENTE where CNPJCPF=@CPF";
             
             tb = cn.OpenDataSetWithParam(strSQL.ToString(), "Paciente", colPar).Tables[0];

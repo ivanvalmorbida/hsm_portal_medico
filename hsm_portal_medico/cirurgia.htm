@@ -16,7 +16,8 @@
                     <h1 class="display-1">Cirurgias:</h1>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm12 md12>
-                            <v-select :on-change="VerificaParticular()" :items="convenio_items" v-model="convenio" label="Convênio" return-object :rules="[rules.required]" required></v-select>
+                            <v-select :on-change="VerificaParticular()" :items="convenio_items" v-model="convenio"
+                                label="Convênio" return-object :rules="[rules.required]" required></v-select>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap v-if="opcao_convenio">
@@ -24,29 +25,41 @@
                             <v-text-field v-model="guia" label="Nr.Guia" :rules="[rules.required]" required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md3>
-                            <v-text-field v-model="autorizacao" label="Nr.Autorização" :rules="[rules.required]" required></v-text-field>
+                            <v-text-field v-model="autorizacao" label="Nr.Autorização" :rules="[rules.required]"
+                                required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md3>
-                            <v-menu ref="menu_data_autoriza" v-model="menu_data_autoriza" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
-                                    offset-y full-width min-width="290px">
-                                <v-text-field :rules="[rules.required]" required slot="activator" v-model="data_autoriza_Formatted" label="Data Autorização" prepend-icon="event"></v-text-field>
-                                <v-date-picker :rules="[rules.required]" required locale="pt-br" v-model="data_autoriza" @input="menu_data_autoriza = false"></v-date-picker>
+                            <v-menu ref="menu_data_autoriza" v-model="menu_data_autoriza" :nudge-right="40"
+                                :close-on-content-click="false" lazy transition="scale-transition" offset-y full-width
+                                min-width="290px">
+                                <v-text-field mask="##/##/####" :rules="[rules.required]" required slot="activator"
+                                    v-model="data_autoriza_Formatted" label="Data Autorização" prepend-icon="event"
+                                    @blur="data_autoriza = parseDate(data_autoriza_Formatted)"></v-text-field>
+                                <v-date-picker :rules="
+                                    [rules.required]" required
+                                    locale="pt-br" v-model="data_autoriza" @input="menu_data_autoriza = false">
+                                </v-date-picker>
                             </v-menu>
                         </v-flex>
                         <v-flex d-flex xs12 sm6 md3>
-                            <v-menu ref="menu_valid_autoriza" v-model="menu_valid_autoriza" :nudge-right="40" :close-on-content-click="false" lazy transition="scale-transition"
-                                    offset-y full-width min-width="290px">
-                                <v-text-field :rules="[rules.required]" required slot="activator" v-model="valid_autoriza_Formatted" label="Validade Autorização" prepend-icon="event"></v-text-field>
+                            <v-menu ref="menu_valid_autoriza" v-model="menu_valid_autoriza" :nudge-right="40"
+                                :close-on-content-click="false" lazy transition="scale-transition" offset-y full-width
+                                min-width="290px">
+                                <v-text-field mask="##/##/####" :rules="[rules.required]" required slot="activator"
+                                    v-model="valid_autoriza_Formatted" label="Validade Autorização" prepend-icon="event"
+                                    @blur="valid_autoriza = parseDate(valid_autoriza_Formatted)"></v-text-field>
                                 <v-date-picker locale="pt-br" v-model="valid_autoriza" @input="menu_valid_autoriza = false"></v-date-picker>
                             </v-menu>
                         </v-flex>
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm3 md2>
-                            <v-text-field :rules="[rules.required]" v-model="tempo" label="Tempo Estimado" type="number" required></v-text-field>
+                            <v-text-field :rules="[rules.required]" v-model="tempo" label="Tempo Estimado" type="number"
+                                required></v-text-field>
                         </v-flex>
                         <v-flex d-flex xs12 sm9 md10>
-                            <v-radio-group :rules="[rules.required]" required label="Tipo de Anestesia" v-model="anestesia" row>
+                            <v-radio-group :rules="[rules.required]" required label="Tipo de Anestesia" v-model="anestesia"
+                                row>
                                 <v-radio label="Sem anestesista" value="2"></v-radio>
                                 <v-radio label="Com anestesista" value="1"></v-radio>
                             </v-radio-group>
@@ -54,8 +67,8 @@
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex d-flex xs12 sm12 md12>
-                            <v-select :loading="loading" :items="items" :search-input.sync="search" v-model="procedimento" label="Procedimento Cirurgico"
-                                      autocomplete return-object></v-select>
+                            <v-select :loading="loading" :items="items" :search-input.sync="search" v-model="procedimento"
+                                label="Procedimento Cirurgico" autocomplete return-object></v-select>
                             <v-btn flat icon color="primary" @click="addItem()">
                                 <v-icon>check_circle</v-icon>
                             </v-btn>

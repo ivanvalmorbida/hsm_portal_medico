@@ -46,6 +46,14 @@
     },
 
     methods: {
+        parseDate (date) {
+            if (!date) return null
+            
+            day = date.substring(0,2)
+            month = date.substring(2,4)
+            year = date.substring(4,8)
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+          },
 
         getAgendas() {
             $('#btn-buscar').attr("disabled","true")
@@ -102,14 +110,14 @@
             })
 
             objAgendar["sala"] = item.Sala
-            objAgendar["convenio"] = item.convenio
+            objAgendar["convenio"] = this.convenio.value
             objAgendar["paciente"] = this.paci
             objAgendar["tempo"] = this.tempo
             objAgendar["horaini"] = item.HoraIni
-            objAgendar["guia"] = this.guia
-			objAgendar["autorizacao"] = this.autorizacao
-            objAgendar["data_autoriza"] = this.data_autoriza
-			objAgendar["valid_autoriza"] = this.valid_autoriza
+            if(this.guia!=null) {objAgendar["guia"] = this.guia} else {objAgendar["guia"] = ""}
+            if(this.autorizacao!=null) {objAgendar["autorizacao"] = this.autorizacao} else {objAgendar["autorizacao"] = ""}
+            if(this.data_autoriza!=null) {objAgendar["data_autoriza"] = this.data_autoriza} else {objAgendar["data_autoriza"] = ""}
+            if(this.valid_autoriza!=null) {objAgendar["valid_autoriza"] = this.valid_autoriza} else {objAgendar["valid_autoriza"] = ""}
             objAgendar["procedimentos"] = procedimentos
 
             this.$http.post("agenda.asmx/Agendar", {obj: objAgendar}).then((res) => {

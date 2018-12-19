@@ -209,7 +209,14 @@ namespace hsm_portal_medico
                 colPar.Add(sqlPar);
             }
             strSQL.Append("UPDATE AGENDA_HOSPITAL set medicoexe=@medico, paciente=@paciente,").AppendLine(); 
+            
             strSQL.Append("NOMEPACI=(select nome from paciente where codigo=@paciente),").AppendLine();
+            strSQL.Append("NRCONVENIO=(select NRCONVENIO from paciente where codigo=@paciente and convenio=@convenio),").AppendLine();
+            strSQL.Append("CONVENIO_PLANO=(select CONVENIO_PLANO from paciente where codigo=@paciente and convenio=@convenio),").AppendLine();
+            strSQL.Append("CONVENIO_VALIDADE_CARTEIRA=(select CONVENIO_VALIDADE_CARTEIRA from paciente where codigo=@paciente and convenio=@convenio),").AppendLine();
+            strSQL.Append("FONEPACI=(select Celular from paciente where codigo=@paciente),").AppendLine();
+            strSQL.Append("RG=(select RG from paciente where codigo=@paciente),").AppendLine();
+
             strSQL.Append("Convenio=@convenio").AppendLine();
 
             if (obj.data_autoriza.Year != 1){
