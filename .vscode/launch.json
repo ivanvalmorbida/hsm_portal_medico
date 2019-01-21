@@ -21,7 +21,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/<insert-target-framework-here>/<insert-project-name-here>.dll",
+            "program": "${workspaceFolder}/hsm_portal_medico/bin/hsm_portal_medico.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
