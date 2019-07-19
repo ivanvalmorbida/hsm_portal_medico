@@ -6,9 +6,9 @@ using System.Collections.Generic;
 //
 public sealed class Conexao
 {
-    // RESTORE DATABASE [hsm] FROM DISK = N'/home/ivan/Downloads/Hsm4.bak' WITH FILE = 1, NOUNLOAD, REPLACE, NORECOVERY, STATS = 5
+    // RESTORE DATABASE [hsm] FROM DISK = N'/home/ivan/Downloads/Hsm4.bak' WITH FILE = 1, NOUNLOAD, REPLACE, STATS = 5
     private SqlConnection DBCon = new SqlConnection();
-	private string strConection = "Server=localhost;Database=hsm7;User ID=SA;Password=CTInfo&Kleros4002;Trusted_Connection=False;Connection Timeout=30;Pooling=False;";
+	private string strConection = "Server=localhost;Database=Hsm4;User ID=SA;Password=Ivanluis1#;Trusted_Connection=False;Connection Timeout=30;Pooling=False;";
     private string _MSG;
 
     public string MSG
